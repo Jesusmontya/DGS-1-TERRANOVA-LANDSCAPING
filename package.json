@@ -1,4 +1,11 @@
 {
+  "name": "dgs-1-terranova-landscaping",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
   "dependencies": {
     "@hookform/resolvers": "^5.9.1",
     "@supabase/ssr": "^0.12.4",
@@ -6,9 +13,18 @@
     "clsx": "^2.1.1",
     "framer-motion": "^13.1.0",
     "lucide-react": "^1.32.0",
+    "next": "^16.0.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
     "react-hook-form": "^7.85.0",
     "tailwind-merge": "^3.6.0",
     "twilio": "^6.1.0",
     "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "^5.9.0"
   }
 }
