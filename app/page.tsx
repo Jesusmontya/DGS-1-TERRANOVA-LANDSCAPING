@@ -2,22 +2,22 @@ const services = [
   {
     title: 'Landscaping',
     text: 'Thoughtful outdoor spaces designed around your property, lifestyle, and goals.',
-    image: 'https://images.unsplash.com/photo-1558904541-efa843a96f01?auto=format&fit=crop&w=1200&q=85',
+    image: '/images/imgs/IMG_0249.PNG',
   },
   {
     title: 'Lawn Care',
     text: 'Consistent, professional care that keeps your lawn clean, healthy, and ready to enjoy.',
-    image: 'https://images.unsplash.com/photo-1589923188900-85dae523342b?auto=format&fit=crop&w=1200&q=85',
+    image: '/images/imgs/IMG_0250.PNG',
   },
   {
     title: 'Irrigation',
     text: 'Efficient irrigation solutions that help protect your landscape while using water wisely.',
-    image: 'https://images.unsplash.com/photo-1599685315640-2b4b4f5d0f5f?auto=format&fit=crop&w=1200&q=85',
+    image: '/images/imgs/IMG_0251.PNG',
   },
   {
     title: 'Hardscapes',
     text: 'Pavers, walkways, patios, and outdoor features built to make your property feel complete.',
-    image: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1200&q=85',
+    image: '/images/imgs/IMG_0252.PNG',
   },
 ]
 
