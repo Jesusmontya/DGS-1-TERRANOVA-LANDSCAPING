@@ -39,6 +39,7 @@ export default function Home() {
           <a href="#services">Services</a>
           <a href="#about">About</a>
           <a href="#work">Our Work</a>
+          <a href="#reviews">Reviews</a>
           <a href="#contact">Contact</a>
         </nav>
 
@@ -50,8 +51,8 @@ export default function Home() {
         <div className="hero-overlay" />
         <div className="hero-content page-width">
           <p className="eyebrow light">LANDSCAPING • RENO • SPARKS • NORTHERN NEVADA</p>
-          <h1>Make your outdoor space feel like home.</h1>
-          <p className="hero-copy">Professional landscaping built around your property, your vision, and the way you want to live outside.</p>
+          <h1>Professional landscaping for the way you live outside.</h1>
+          <p className="hero-copy">From landscape upgrades to ongoing care, TerraNova creates outdoor spaces that look better, work better, and feel like home.</p>
           <div className="hero-actions">
             <a className="button button-primary" href="#contact">Get a Free Estimate <span>↗</span></a>
             <a className="button button-ghost" href="tel:+17750000000">Call TerraNova</a>
@@ -67,10 +68,10 @@ export default function Home() {
       <section className="intro section page-width" id="about">
         <div>
           <p className="eyebrow">WHY TERRANOVA</p>
-          <h2>Professional landscaping without the runaround.</h2>
+          <h2>A local team that treats your property like it matters.</h2>
         </div>
         <div className="intro-copy">
-          <p>From a clean-up that changes the look of your property to a complete backyard transformation, TerraNova brings experience, communication, and attention to detail to every project.</p>
+          <p>With 15+ years of experience, TerraNova helps homeowners turn outdoor spaces into places they are proud to own. We focus on clear communication, practical solutions, and quality work from the first conversation to the finished project.</p>
           <a className="text-link" href="#contact">Talk about your project <span>→</span></a>
         </div>
       </section>
@@ -94,7 +95,7 @@ export default function Home() {
                 <div className="service-body">
                   <h3>{service.title}</h3>
                   <p>{service.text}</p>
-                  <a href="#contact">Learn more <span>→</span></a>
+                  <a href="#contact">Request an estimate <span>→</span></a>
                 </div>
               </article>
             ))}
@@ -102,16 +103,36 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="split-feature section page-width" id="work">
+      <section className="before-after section page-width" id="work">
+        <div className="section-heading compact-heading">
+          <div>
+            <p className="eyebrow">OUR WORK</p>
+            <h2>See the difference professional landscaping can make.</h2>
+          </div>
+          <p>Real project photos will replace these placeholders once TerraNova's portfolio is collected.</p>
+        </div>
+        <div className="comparison-grid">
+          <article className="comparison-card">
+            <div className="comparison-image before-image" />
+            <div className="comparison-label"><span>01</span> BEFORE</div>
+          </article>
+          <article className="comparison-card">
+            <div className="comparison-image after-image" />
+            <div className="comparison-label"><span>02</span> AFTER</div>
+          </article>
+        </div>
+      </section>
+
+      <section className="split-feature section page-width">
         <div className="feature-photo" />
         <div className="feature-copy">
           <p className="eyebrow">BUILT FOR NORTHERN NEVADA</p>
           <h2>Your property deserves more than a one-size-fits-all solution.</h2>
           <p>We take the time to understand the space, the conditions, and what you actually want from your yard. The result is a landscape that looks intentional and works for you.</p>
           <ul className="check-list">
-            <li>Experienced local professionals</li>
+            <li>15+ years of landscaping experience</li>
             <li>Clear communication from estimate to completion</li>
-            <li>Landscape solutions tailored to your property</li>
+            <li>Solutions tailored to your property and goals</li>
           </ul>
           <a className="button button-dark" href="#contact">Start Your Project <span>↗</span></a>
         </div>
@@ -121,7 +142,8 @@ export default function Home() {
         <div className="page-width areas-inner">
           <div>
             <p className="eyebrow light">SERVICE AREA</p>
-            <h2>Proudly serving the Reno area.</h2>
+            <h2>Serving homeowners across the Reno area.</h2>
+            <p className="areas-copy">TerraNova serves Reno, Sparks, and surrounding Northern Nevada communities. Exact service availability can be confirmed when you request an estimate.</p>
           </div>
           <div className="area-list">
             {areas.map((area) => <span key={area}>{area}</span>)}
@@ -129,15 +151,16 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="reviews section page-width">
+      <section className="reviews section page-width" id="reviews">
         <div className="review-intro">
           <p className="eyebrow">CUSTOMER EXPERIENCE</p>
-          <h2>Great work should be easy to recommend.</h2>
+          <h2>When the work is good, customers tell people.</h2>
+          <p>We will connect this section to TerraNova's verified Google reviews once the Business Profile is ready.</p>
         </div>
-        <div className="review-card">
+        <div className="review-card review-placeholder">
           <div className="stars">★★★★★</div>
-          <blockquote>“TerraNova made the whole process simple. The team understood what we wanted and delivered a space we actually enjoy using.”</blockquote>
-          <p className="review-author">Google Review <span>•</span> TerraNova Customer</p>
+          <blockquote>“Your verified Google reviews will appear here.”</blockquote>
+          <p className="review-author">Google Reviews <span>•</span> Connected after Business Profile setup</p>
         </div>
       </section>
 
@@ -145,16 +168,22 @@ export default function Home() {
         <div className="page-width cta-inner">
           <div>
             <p className="eyebrow light">READY WHEN YOU ARE</p>
-            <h2>Let’s make your yard the best part of your property.</h2>
-            <p>Tell us what you have in mind. We’ll help you figure out the next step.</p>
+            <h2>Let’s talk about your next outdoor project.</h2>
+            <p>Tell us what you have in mind. Request a free estimate and a TerraNova representative can follow up with you.</p>
+            <div className="cta-contact-links">
+              <a href="tel:+17750000000">Call TerraNova <span>↗</span></a>
+              <a href="mailto:info@terranovalandscapingnv.com">Email us <span>↗</span></a>
+            </div>
           </div>
           <form className="lead-form" action="#" method="post">
             <label>Name<input name="name" placeholder="Your name" required /></label>
             <label>Phone<input name="phone" type="tel" placeholder="(775) 000-0000" required /></label>
-            <label>What do you need?<select name="service" defaultValue=""><option value="" disabled>Select a service</option><option>Landscaping</option><option>Lawn Care</option><option>Irrigation</option><option>Hardscaping</option><option>Other</option></select></label>
+            <label>Email<input name="email" type="email" placeholder="you@example.com" /></label>
+            <label>Service<select name="service" defaultValue=""><option value="" disabled>Select a service</option><option>Landscaping</option><option>Lawn Care</option><option>Irrigation</option><option>Hardscaping</option><option>Other</option></select></label>
+            <label>Project address<input name="address" placeholder="Reno, NV" /></label>
             <label>Tell us about your project<textarea name="message" placeholder="A few details about your property or project..." rows={4} /></label>
             <button className="button button-primary form-button" type="submit">Request My Free Estimate <span>↗</span></button>
-            <small>We’ll use your information only to respond to your request.</small>
+            <small>By submitting this form, you agree that TerraNova may contact you about your request.</small>
           </form>
         </div>
       </section>
