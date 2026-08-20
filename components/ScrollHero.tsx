@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import styles from './ScrollHero.module.css'
 
 const VIDEO_DURATION = 9.84
 
@@ -59,11 +60,11 @@ export default function ScrollHero() {
   const stageOpacity = Math.min(1, Math.max(0, (progress - 0.12) * 5))
 
   return (
-    <section className="scroll-story" id="top" ref={sectionRef}>
-      <div className="scroll-story-sticky">
+    <section className={styles.story} id="top" ref={sectionRef}>
+      <div className={styles.sticky}>
         <video
           ref={videoRef}
-          className="scroll-story-video"
+          className={styles.video}
           src="/videos/terranova-hero-transformation.mp4"
           muted
           playsInline
@@ -73,32 +74,32 @@ export default function ScrollHero() {
           aria-label="TerraNova backyard landscaping transformation"
         />
 
-        <div className="scroll-story-shade" />
+        <div className={styles.shade} />
 
-        <div className="scroll-story-intro page-width" style={{ opacity: introOpacity }}>
+        <div className={`${styles.intro} page-width`} style={{ opacity: introOpacity }}>
           <p className="eyebrow light">LANDSCAPING • RENO • SPARKS • NORTHERN NEVADA</p>
           <h1>See what your yard can become.</h1>
           <p>
             Scroll through a TerraNova transformation — from finished result, back to the original yard, then through every major stage of the build.
           </p>
-          <span className="scroll-cue">SCROLL TO BUILD THE YARD ↓</span>
+          <span className={styles.cue}>SCROLL TO BUILD THE YARD ↓</span>
         </div>
 
-        <div className="scroll-stage page-width" style={{ opacity: stageOpacity }}>
-          <div className="scroll-stage-copy">
-            <span className="scroll-stage-index">
+        <div className={`${styles.stage} page-width`} style={{ opacity: stageOpacity }}>
+          <div className={styles.stageCopy}>
+            <span className={styles.stageIndex}>
               {activeStage ? String(stages.indexOf(activeStage) + 1).padStart(2, '0') : '00'}
             </span>
             <p>{activeStage?.label ?? 'AFTER'}</p>
             <h2>{activeStage?.detail ?? 'Start with the finished result. Then scroll backward to see how TerraNova built it.'}</h2>
           </div>
 
-          <div className="scroll-progress" aria-hidden="true">
+          <div className={styles.progress} aria-hidden="true">
             <span style={{ transform: `scaleX(${progress})` }} />
           </div>
         </div>
 
-        <a className="scroll-hero-cta" href="#contact">Get a Free Estimate <span>↗</span></a>
+        <a className={styles.cta} href="#contact">Get a Free Estimate <span>↗</span></a>
       </div>
     </section>
   )
