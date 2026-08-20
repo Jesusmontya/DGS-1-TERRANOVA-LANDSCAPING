@@ -161,24 +161,53 @@
 
 @media (max-width: 760px) {
   .story { height: 520vh; }
-  .video { object-position: 58% center; }
+
+  .sticky {
+    background: #0f1713;
+  }
+
+  .video {
+    left: 50%;
+    right: auto;
+    top: 50%;
+    bottom: auto;
+    width: 100vw;
+    height: auto;
+    min-height: 0;
+    max-width: none;
+    object-fit: contain;
+    object-position: center center;
+    transform: translate(-50%, -50%);
+    backface-visibility: hidden;
+  }
+
+  .shade {
+    background:
+      linear-gradient(180deg, rgba(10, 17, 13, .22) 0%, rgba(10, 17, 13, .05) 38%, rgba(10, 17, 13, .72) 100%);
+  }
+
   .intro,
   .stage {
     padding-bottom: 66px;
   }
+
   .stage {
     padding-top: 104px;
   }
+
   .intro > p:not(:first-child) {
     font-size: 15px;
   }
+
   .stageCopy h2 {
     font-size: clamp(30px, 9vw, 44px);
   }
+
   .cta {
     right: 15px;
     bottom: 38px;
   }
+
   .progress {
     left: 15px;
     right: 15px;
