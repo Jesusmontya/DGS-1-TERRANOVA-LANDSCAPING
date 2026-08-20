@@ -1,0 +1,43 @@
+.button {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 120;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 50px;
+  padding: 0 18px;
+  border: 1px solid rgba(255, 255, 255, .22);
+  border-radius: 999px;
+  background: #1f3028;
+  color: #fff;
+  box-shadow: 0 12px 32px rgba(16, 23, 19, .28);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .01em;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+}
+
+.button:hover {
+  transform: translateY(-2px);
+  background: #304238;
+  box-shadow: 0 16px 36px rgba(16, 23, 19, .34);
+}
+
+.button svg {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+}
+
+@media (max-width: 760px) {
+  .button {
+    right: 15px;
+    bottom: 18px;
+    min-height: 48px;
+    padding: 0 16px;
+  }
+}
