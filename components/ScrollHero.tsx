@@ -20,6 +20,7 @@ export default function ScrollHero() {
   const frameRef = useRef<number | null>(null)
   const [progress, setProgress] = useState(0)
   const [videoReady, setVideoReady] = useState(false)
+  const [videoError, setVideoError] = useState(false)
 
   useEffect(() => {
     const section = sectionRef.current
@@ -34,8 +35,10 @@ export default function ScrollHero() {
       setProgress(raw)
 
       if (videoReady && Number.isFinite(video.duration) && video.duration > 0) {
-        const targetTime = Math.min(raw * VIDEO_DURATION, video.duration - 0.01)
-        if (Math.abs(video.currentTime - targetTime) > 0.035) video.currentTime = targetTime
+        const targetTime = Math.min(raw * VIDEO_DURATION, Math.max(video.duration - 0.01, 0))
+        if (Math.abs(video.currentTime - targetTime) > 0.035) {
+          video.currentTime = targetTime
+        }
       }
     }
 
@@ -68,11 +71,26 @@ export default function ScrollHero() {
           src="/videos/terranova-hero-transformation.mp4"
           muted
           playsInline
-          preload="metadata"
-          poster="/images/imgs/IMG_0274.PNG"
-          onLoadedMetadata={() => setVideoReady(true)}
+          preload="auto"
+          onLoadedMetadata={() => {
+            setVideoReady(true)
+            setVideoError(false)
+          }}
+          onCanPlay={() => setVideoReady(true)}
+          onError={() => {
+            setVideoReady(false)
+            setVideoError(true)
+          }}
           aria-label="TerraNova backyard landscaping transformation"
         />
+
+        {!videoReady && !videoError && (
+          <div className={styles.videoStatus}>Loading transformation…</div>
+        )}
+
+        {videoError && (
+          <div className={styles.videoStatus}>Transformation video unavailable.</div>
+        )}
 
         <div className={styles.shade} />
 
