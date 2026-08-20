@@ -20,6 +20,20 @@
   object-fit: cover;
   object-position: center;
   transform: scale(1.01);
+  background: #101713;
+}
+
+.videoStatus {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: rgba(255,255,255,.72);
+  font-size: 13px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  background: #101713;
 }
 
 .shade {
