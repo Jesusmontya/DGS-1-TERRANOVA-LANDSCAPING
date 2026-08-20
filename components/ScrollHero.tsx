@@ -21,11 +21,25 @@ export default function ScrollHero() {
   const [progress, setProgress] = useState(0)
   const [videoReady, setVideoReady] = useState(false)
   const [videoError, setVideoError] = useState(false)
+  const [mobileUnlocked, setMobileUnlocked] = useState(false)
 
   useEffect(() => {
     const section = sectionRef.current
     const video = videoRef.current
     if (!section || !video) return
+
+    const primeVideo = async () => {
+      if (mobileUnlocked) return
+      try {
+        video.muted = true
+        await video.play()
+        video.pause()
+        if (video.currentTime < 0.01) video.currentTime = 0.01
+        setMobileUnlocked(true)
+      } catch {
+        // Some mobile browsers only allow this after an explicit user gesture.
+      }
+    }
 
     const update = () => {
       frameRef.current = null
@@ -35,9 +49,13 @@ export default function ScrollHero() {
       setProgress(raw)
 
       if (videoReady && Number.isFinite(video.duration) && video.duration > 0) {
-        const targetTime = Math.min(raw * VIDEO_DURATION, Math.max(video.duration - 0.01, 0))
-        if (Math.abs(video.currentTime - targetTime) > 0.035) {
-          video.currentTime = targetTime
+        const targetTime = Math.min(raw * VIDEO_DURATION, Math.max(video.duration - 0.03, 0))
+        if (Math.abs(video.currentTime - targetTime) > 0.03) {
+          try {
+            video.currentTime = targetTime
+          } catch {
+            // Ignore transient seek errors while the mobile browser buffers.
+          }
         }
       }
     }
@@ -46,16 +64,24 @@ export default function ScrollHero() {
       if (frameRef.current === null) frameRef.current = requestAnimationFrame(update)
     }
 
+    const onFirstGesture = () => {
+      primeVideo()
+    }
+
     update()
     window.addEventListener('scroll', onScroll, { passive: true })
     window.addEventListener('resize', onScroll)
+    window.addEventListener('touchstart', onFirstGesture, { passive: true, once: true })
+    window.addEventListener('pointerdown', onFirstGesture, { passive: true, once: true })
 
     return () => {
       window.removeEventListener('scroll', onScroll)
       window.removeEventListener('resize', onScroll)
+      window.removeEventListener('touchstart', onFirstGesture)
+      window.removeEventListener('pointerdown', onFirstGesture)
       if (frameRef.current !== null) cancelAnimationFrame(frameRef.current)
     }
-  }, [videoReady])
+  }, [videoReady, mobileUnlocked])
 
   const time = progress * VIDEO_DURATION
   const activeStage = [...stages].reverse().find((stage) => time >= stage.time) ?? null
@@ -72,10 +98,15 @@ export default function ScrollHero() {
           muted
           playsInline
           preload="auto"
-          onLoadedMetadata={() => {
+          controls={false}
+          onLoadedMetadata={(event) => {
+            const video = event.currentTarget
+            video.muted = true
+            video.currentTime = 0.01
             setVideoReady(true)
             setVideoError(false)
           }}
+          onLoadedData={() => setVideoReady(true)}
           onCanPlay={() => setVideoReady(true)}
           onError={() => {
             setVideoReady(false)
