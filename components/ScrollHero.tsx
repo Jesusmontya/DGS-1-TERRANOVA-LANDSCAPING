@@ -30,6 +30,7 @@ export default function ScrollHero() {
 
     const primeVideo = async () => {
       if (mobileUnlocked) return
+
       try {
         video.muted = true
         await video.play()
@@ -37,24 +38,33 @@ export default function ScrollHero() {
         if (video.currentTime < 0.01) video.currentTime = 0.01
         setMobileUnlocked(true)
       } catch {
-        // Some mobile browsers only allow this after an explicit user gesture.
+        // iOS Safari can require a direct touch before allowing programmatic seeking.
       }
     }
 
     const update = () => {
       frameRef.current = null
+
       const rect = section.getBoundingClientRect()
-      const scrollable = Math.max(section.offsetHeight - window.innerHeight, 1)
+      const viewportHeight = document.documentElement.clientHeight || window.innerHeight
+      const scrollable = Math.max(section.offsetHeight - viewportHeight, 1)
       const raw = Math.min(Math.max(-rect.top / scrollable, 0), 1)
       setProgress(raw)
 
-      if (videoReady && Number.isFinite(video.duration) && video.duration > 0) {
-        const targetTime = Math.min(raw * VIDEO_DURATION, Math.max(video.duration - 0.03, 0))
-        if (Math.abs(video.currentTime - targetTime) > 0.03) {
+      if (
+        videoReady &&
+        video.readyState >= 2 &&
+        Number.isFinite(video.duration) &&
+        video.duration > 0
+      ) {
+        const usableDuration = Math.min(VIDEO_DURATION, Math.max(video.duration - 0.03, 0))
+        const targetTime = Math.min(raw * VIDEO_DURATION, usableDuration)
+
+        if (Math.abs(video.currentTime - targetTime) > 0.035) {
           try {
             video.currentTime = targetTime
           } catch {
-            // Ignore transient seek errors while the mobile browser buffers.
+            // Ignore short-lived seek errors while Safari finishes buffering.
           }
         }
       }
@@ -91,37 +101,39 @@ export default function ScrollHero() {
   return (
     <section className={styles.story} id="top" ref={sectionRef}>
       <div className={styles.sticky}>
-        <video
-          ref={videoRef}
-          className={styles.video}
-          src="/videos/terranova-hero-transformation.mp4"
-          muted
-          playsInline
-          preload="auto"
-          controls={false}
-          onLoadedMetadata={(event) => {
-            const video = event.currentTarget
-            video.muted = true
-            video.currentTime = 0.01
-            setVideoReady(true)
-            setVideoError(false)
-          }}
-          onLoadedData={() => setVideoReady(true)}
-          onCanPlay={() => setVideoReady(true)}
-          onError={() => {
-            setVideoReady(false)
-            setVideoError(true)
-          }}
-          aria-label="TerraNova backyard landscaping transformation"
-        />
+        <div className={styles.mediaFrame}>
+          <video
+            ref={videoRef}
+            className={styles.video}
+            src="/videos/terranova-hero-transformation.mp4"
+            muted
+            playsInline
+            preload="auto"
+            controls={false}
+            onLoadedMetadata={(event) => {
+              const video = event.currentTarget
+              video.muted = true
+              video.currentTime = 0.01
+              setVideoReady(true)
+              setVideoError(false)
+            }}
+            onLoadedData={() => setVideoReady(true)}
+            onCanPlay={() => setVideoReady(true)}
+            onError={() => {
+              setVideoReady(false)
+              setVideoError(true)
+            }}
+            aria-label="TerraNova backyard landscaping transformation"
+          />
 
-        {!videoReady && !videoError && (
-          <div className={styles.videoStatus}>Loading transformation…</div>
-        )}
+          {!videoReady && !videoError && (
+            <div className={styles.videoStatus}>Loading transformation…</div>
+          )}
 
-        {videoError && (
-          <div className={styles.videoStatus}>Transformation video unavailable.</div>
-        )}
+          {videoError && (
+            <div className={styles.videoStatus}>Transformation video unavailable.</div>
+          )}
+        </div>
 
         <div className={styles.shade} />
 
