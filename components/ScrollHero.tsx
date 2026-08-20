@@ -105,7 +105,6 @@ export default function ScrollHero() {
           <video
             ref={videoRef}
             className={styles.video}
-            src="/videos/terranova-hero-transformation.mp4"
             muted
             playsInline
             preload="auto"
@@ -124,7 +123,14 @@ export default function ScrollHero() {
               setVideoError(true)
             }}
             aria-label="TerraNova backyard landscaping transformation"
-          />
+          >
+            <source
+              media="(max-width: 767px)"
+              src="/videos/gemini_generated_video_18C35B46%202.MP4"
+              type="video/mp4"
+            />
+            <source src="/videos/terranova-hero-transformation.mp4" type="video/mp4" />
+          </video>
 
           {!videoReady && !videoError && (
             <div className={styles.videoStatus}>Loading transformation…</div>
