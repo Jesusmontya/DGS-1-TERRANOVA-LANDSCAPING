@@ -68,6 +68,13 @@ export default function Home() {
       <section className="cta-section" id="contact"><div className="page-width cta-inner"><div><p className="eyebrow light">READY WHEN YOU ARE</p><h2>Let’s talk about your next outdoor project.</h2><p>Tell us what you have in mind. Request a free estimate and a TerraNova representative can follow up with you.</p><div className="cta-contact-links"><a href="tel:+17750000000">Call TerraNova <span>↗</span></a><a href="mailto:info@terranovalandscapingnv.com">Email us <span>↗</span></a></div></div><form className="lead-form" action="#" method="post"><label>Name<input name="name" placeholder="Your name" required /></label><label>Phone<input name="phone" type="tel" placeholder="(775) 000-0000" required /></label><label>Email<input name="email" type="email" placeholder="you@example.com" /></label><label>Service<select name="service" defaultValue=""><option value="" disabled>Select a service</option><option>Landscaping</option><option>Lawn Care</option><option>Irrigation</option><option>Hardscaping</option><option>Other</option></select></label><label>Project address<input name="address" placeholder="Reno, NV" /></label><label>Tell us about your project<textarea name="message" placeholder="A few details about your property or project..." rows={4} /></label><button className="button button-primary form-button" type="submit">Request My Free Estimate <span>↗</span></button><small>By submitting this form, you agree that TerraNova may contact you about your request.</small></form></div></section>
 
       <footer className="footer"><div className="page-width footer-inner"><div className="brand footer-brand"><span className="brand-mark">TN</span><span><strong>TERRANOVA</strong><small>LANDSCAPING</small></span></div><p>Professional landscaping in Reno, Sparks & Northern Nevada.</p><a href="mailto:info@terranovalandscapingnv.com">info@terranovalandscapingnv.com</a></div></footer>
+
+      <a className="floating-contact" href="tel:+17758707224" aria-label="Call TerraNova at 775-870-7224">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M6.7 2.8 9.1 8c.2.5.1 1-.3 1.4l-1.7 1.7a15.2 15.2 0 0 0 5.8 5.8l1.7-1.7c.4-.4.9-.5 1.4-.3l5.2 2.4c.5.2.8.7.7 1.3l-.5 2.7c-.1.6-.7 1.1-1.3 1.1C10 22.4 1.6 14 1.6 3.9c0-.6.5-1.2 1.1-1.3l2.7-.5c.6-.1 1.1.2 1.3.7Z" fill="currentColor" />
+        </svg>
+        <span>Contact</span>
+      </a>
     </main>
   )
 }
