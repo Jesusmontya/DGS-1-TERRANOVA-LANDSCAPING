@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from 'react'
 import styles from './ScrollHero.module.css'
 
 const VIDEO_DURATION = 9.84
+const MOBILE_VIDEO = '/videos/terranova-hero-mobile.mp4'
+const DESKTOP_VIDEO = '/videos/terranova-hero-transformation.mp4'
 
 const stages = [
   { time: 1.0, label: 'BEFORE', detail: 'We start with the space exactly as it is.' },
@@ -18,66 +20,121 @@ export default function ScrollHero() {
   const sectionRef = useRef<HTMLElement | null>(null)
   const videoRef = useRef<HTMLVideoElement | null>(null)
   const frameRef = useRef<number | null>(null)
+  const fallbackRef = useRef(false)
   const [progress, setProgress] = useState(0)
   const [videoReady, setVideoReady] = useState(false)
   const [videoError, setVideoError] = useState(false)
-  const [isMobile, setIsMobile] = useState<boolean | null>(null)
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth <= 760)
-    checkMobile()
-    window.addEventListener('resize', checkMobile)
-    return () => window.removeEventListener('resize', checkMobile)
-  }, [])
-
-  const videoSrc = isMobile
-    ? '/videos/gemini_generated_video_18C35B46%202.MP4'
-    : '/videos/terranova-hero-transformation.mp4'
-
-  useEffect(() => {
-    if (isMobile === null) return
-    const video = videoRef.current
-    if (!video) return
-
-    setVideoReady(false)
-    setVideoError(false)
-    video.load()
-  }, [videoSrc, isMobile])
 
   useEffect(() => {
     const section = sectionRef.current
     const video = videoRef.current
     if (!section || !video) return
 
-    const update = () => {
-      frameRef.current = null
+    video.muted = true
+    video.load()
+
+    const readProgress = () => {
       const rect = section.getBoundingClientRect()
-      const scrollable = Math.max(section.offsetHeight - window.innerHeight, 1)
-      const raw = Math.min(Math.max(-rect.top / scrollable, 0), 1)
+      const viewportHeight = document.documentElement.clientHeight || window.innerHeight
+      const scrollable = Math.max(section.offsetHeight - viewportHeight, 1)
+      return Math.min(Math.max(-rect.top / scrollable, 0), 1)
+    }
+
+    const seekToProgress = () => {
+      const raw = readProgress()
       setProgress(raw)
 
-      if (videoReady && Number.isFinite(video.duration) && video.duration > 0) {
-        const targetTime = Math.min(raw * VIDEO_DURATION, Math.max(video.duration - 0.01, 0))
-        if (Math.abs(video.currentTime - targetTime) > 0.035) {
-          video.currentTime = targetTime
+      if (video.readyState >= HTMLMediaElement.HAVE_METADATA && Number.isFinite(video.duration) && video.duration > 0) {
+        const usableDuration = Math.min(VIDEO_DURATION, Math.max(video.duration - 0.03, 0))
+        const targetTime = Math.min(raw * VIDEO_DURATION, usableDuration)
+
+        if (Math.abs(video.currentTime - targetTime) > 0.025) {
+          try {
+            video.currentTime = targetTime
+          } catch {
+            // Safari can briefly reject a seek while opening a new byte range.
+          }
         }
       }
     }
 
-    const onScroll = () => {
-      if (frameRef.current === null) frameRef.current = requestAnimationFrame(update)
+    const primeVideo = async () => {
+      try {
+        video.muted = true
+        if (video.networkState === HTMLMediaElement.NETWORK_EMPTY) video.load()
+        await video.play()
+        video.pause()
+        seekToProgress()
+      } catch {
+        // A touch/pointer gesture below will retry on browsers that require one.
+      }
     }
 
-    update()
+    const onScroll = () => {
+      if (video.networkState === HTMLMediaElement.NETWORK_EMPTY) video.load()
+      if (frameRef.current === null) {
+        frameRef.current = requestAnimationFrame(() => {
+          frameRef.current = null
+          seekToProgress()
+        })
+      }
+    }
+
+    const onFirstGesture = () => {
+      void primeVideo()
+    }
+
+    seekToProgress()
+    void primeVideo()
+
     window.addEventListener('scroll', onScroll, { passive: true })
     window.addEventListener('resize', onScroll)
+    window.addEventListener('touchstart', onFirstGesture, { passive: true })
+    window.addEventListener('pointerdown', onFirstGesture, { passive: true })
 
     return () => {
       window.removeEventListener('scroll', onScroll)
       window.removeEventListener('resize', onScroll)
+      window.removeEventListener('touchstart', onFirstGesture)
+      window.removeEventListener('pointerdown', onFirstGesture)
       if (frameRef.current !== null) cancelAnimationFrame(frameRef.current)
     }
-  }, [videoReady])
+  }, [])
+
+  const handleReady = (video: HTMLVideoElement) => {
+    video.muted = true
+    setVideoReady(true)
+    setVideoError(false)
+
+    const section = sectionRef.current
+    if (!section || !Number.isFinite(video.duration) || video.duration <= 0) return
+
+    const rect = section.getBoundingClientRect()
+    const viewportHeight = document.documentElement.clientHeight || window.innerHeight
+    const scrollable = Math.max(section.offsetHeight - viewportHeight, 1)
+    const raw = Math.min(Math.max(-rect.top / scrollable, 0), 1)
+    const usableDuration = Math.min(VIDEO_DURATION, Math.max(video.duration - 0.03, 0))
+
+    try {
+      video.currentTime = Math.min(raw * VIDEO_DURATION, usableDuration)
+    } catch {}
+  }
+
+  const handleVideoError = (video: HTMLVideoElement) => {
+    const isMobile = window.matchMedia('(max-width: 760px)').matches
+
+    if (isMobile && !fallbackRef.current) {
+      fallbackRef.current = true
+      setVideoReady(false)
+      setVideoError(false)
+      video.src = DESKTOP_VIDEO
+      video.load()
+      return
+    }
+
+    setVideoReady(false)
+    setVideoError(true)
+  }
 
   const time = progress * VIDEO_DURATION
   const activeStage = [...stages].reverse().find((stage) => time >= stage.time) ?? null
@@ -87,31 +144,23 @@ export default function ScrollHero() {
   return (
     <section className={styles.story} id="top" ref={sectionRef}>
       <div className={styles.sticky}>
-        {isMobile !== null && (
-          <video
-            key={videoSrc}
-            ref={videoRef}
-            className={styles.video}
-            src={videoSrc}
-            muted
-            playsInline
-            preload="auto"
-            onLoadedMetadata={() => {
-              setVideoReady(true)
-              setVideoError(false)
-            }}
-            onCanPlay={() => setVideoReady(true)}
-            onError={() => {
-              setVideoReady(false)
-              setVideoError(true)
-            }}
-            aria-label="TerraNova backyard landscaping transformation"
-          />
-        )}
-
-        {!videoReady && !videoError && (
-          <div className={styles.videoStatus}>Loading transformation…</div>
-        )}
+        <video
+          ref={videoRef}
+          className={styles.video}
+          muted
+          playsInline
+          preload="auto"
+          controls={false}
+          poster="/images/imgs/IMG_0274.PNG"
+          onLoadedMetadata={(event) => handleReady(event.currentTarget)}
+          onLoadedData={(event) => handleReady(event.currentTarget)}
+          onCanPlay={(event) => handleReady(event.currentTarget)}
+          onError={(event) => handleVideoError(event.currentTarget)}
+          aria-label="TerraNova backyard landscaping transformation"
+        >
+          <source media="(max-width: 760px)" src={MOBILE_VIDEO} type="video/mp4" />
+          <source src={DESKTOP_VIDEO} type="video/mp4" />
+        </video>
 
         {videoError && (
           <div className={styles.videoStatus}>Transformation video unavailable.</div>
