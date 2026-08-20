@@ -21,7 +21,7 @@ export default function ScrollHero() {
   const [progress, setProgress] = useState(0)
   const [videoReady, setVideoReady] = useState(false)
   const [videoError, setVideoError] = useState(false)
-  const [isMobile, setIsMobile] = useState(false)
+  const [isMobile, setIsMobile] = useState<boolean | null>(null)
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth <= 760)
@@ -29,6 +29,20 @@ export default function ScrollHero() {
     window.addEventListener('resize', checkMobile)
     return () => window.removeEventListener('resize', checkMobile)
   }, [])
+
+  const videoSrc = isMobile
+    ? '/videos/gemini_generated_video_18C35B46%202.MP4'
+    : '/videos/terranova-hero-transformation.mp4'
+
+  useEffect(() => {
+    if (isMobile === null) return
+    const video = videoRef.current
+    if (!video) return
+
+    setVideoReady(false)
+    setVideoError(false)
+    video.load()
+  }, [videoSrc, isMobile])
 
   useEffect(() => {
     const section = sectionRef.current
@@ -73,28 +87,27 @@ export default function ScrollHero() {
   return (
     <section className={styles.story} id="top" ref={sectionRef}>
       <div className={styles.sticky}>
-        <video
-          ref={videoRef}
-          className={styles.video}
-          src={
-            isMobile
-              ? '/videos/gemini_generated_video_18C35B46 2.MP4'
-              : '/videos/terranova-hero-transformation.mp4'
-          }
-          muted
-          playsInline
-          preload="auto"
-          onLoadedMetadata={() => {
-            setVideoReady(true)
-            setVideoError(false)
-          }}
-          onCanPlay={() => setVideoReady(true)}
-          onError={() => {
-            setVideoReady(false)
-            setVideoError(true)
-          }}
-          aria-label="TerraNova backyard landscaping transformation"
-        />
+        {isMobile !== null && (
+          <video
+            key={videoSrc}
+            ref={videoRef}
+            className={styles.video}
+            src={videoSrc}
+            muted
+            playsInline
+            preload="auto"
+            onLoadedMetadata={() => {
+              setVideoReady(true)
+              setVideoError(false)
+            }}
+            onCanPlay={() => setVideoReady(true)}
+            onError={() => {
+              setVideoReady(false)
+              setVideoError(true)
+            }}
+            aria-label="TerraNova backyard landscaping transformation"
+          />
+        )}
 
         {!videoReady && !videoError && (
           <div className={styles.videoStatus}>Loading transformation…</div>
