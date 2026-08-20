@@ -17,6 +17,7 @@ export interface Service {
   description: string
   shortDesc:   string
   icon:        string
+  keywords?:   string[]
   featured?:   boolean
 }
 
@@ -24,6 +25,7 @@ export interface ServiceArea {
   city:      string
   state:     string
   slug:      string
+  keywords?: string[]
   featured?: boolean
 }
 
