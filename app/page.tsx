@@ -1,3 +1,5 @@
+import ScrollHero from '../components/ScrollHero'
+
 const services = [
   {
     title: 'Landscaping',
@@ -37,17 +39,7 @@ export default function Home() {
         <a className="header-cta" href="#contact">Get a Free Estimate</a>
       </header>
 
-      <section className="hero" id="top">
-        <div className="hero-image" style={{ backgroundImage: "url('/images/imgs/IMG_0271.PNG')" }} />
-        <div className="hero-overlay" />
-        <div className="hero-content page-width">
-          <p className="eyebrow light">LANDSCAPING • RENO • SPARKS • NORTHERN NEVADA</p>
-          <h1>Professional landscaping for the way you live outside.</h1>
-          <p className="hero-copy">From landscape upgrades to ongoing care, TerraNova creates outdoor spaces that look better, work better, and feel like home.</p>
-          <div className="hero-actions"><a className="button button-primary" href="#contact">Get a Free Estimate <span>↗</span></a><a className="button button-ghost" href="tel:+17750000000">Call TerraNova</a></div>
-          <div className="trust-row"><span><b>15+</b> Years Experience</span><span><b>Local</b> Reno Team</span><span><b>Free</b> Estimates</span></div>
-        </div>
-      </section>
+      <ScrollHero />
 
       <section className="intro section page-width" id="about">
         <div><p className="eyebrow">WHY TERRANOVA</p><h2>A local team that treats your property like it matters.</h2></div>
