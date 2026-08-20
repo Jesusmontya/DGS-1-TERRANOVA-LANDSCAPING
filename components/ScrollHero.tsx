@@ -21,81 +21,49 @@ export default function ScrollHero() {
   const [progress, setProgress] = useState(0)
   const [videoReady, setVideoReady] = useState(false)
   const [videoError, setVideoError] = useState(false)
-  const [mobileUnlocked, setMobileUnlocked] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 760)
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   useEffect(() => {
     const section = sectionRef.current
     const video = videoRef.current
     if (!section || !video) return
 
-    video.muted = true
-    video.load()
-
-    const seekToProgress = () => {
+    const update = () => {
+      frameRef.current = null
       const rect = section.getBoundingClientRect()
-      const viewportHeight = document.documentElement.clientHeight || window.innerHeight
-      const scrollable = Math.max(section.offsetHeight - viewportHeight, 1)
+      const scrollable = Math.max(section.offsetHeight - window.innerHeight, 1)
       const raw = Math.min(Math.max(-rect.top / scrollable, 0), 1)
       setProgress(raw)
 
       if (videoReady && Number.isFinite(video.duration) && video.duration > 0) {
-        const usableDuration = Math.min(VIDEO_DURATION, Math.max(video.duration - 0.03, 0))
-        const targetTime = Math.min(raw * VIDEO_DURATION, usableDuration)
-
-        if (Math.abs(video.currentTime - targetTime) > 0.025) {
-          try {
-            video.currentTime = targetTime
-          } catch {
-            // Safari can briefly reject a seek while it opens a new byte range.
-          }
+        const targetTime = Math.min(raw * VIDEO_DURATION, Math.max(video.duration - 0.01, 0))
+        if (Math.abs(video.currentTime - targetTime) > 0.035) {
+          video.currentTime = targetTime
         }
       }
     }
 
-    const primeVideo = async () => {
-      if (mobileUnlocked) return
-
-      try {
-        video.muted = true
-        if (video.networkState === HTMLMediaElement.NETWORK_EMPTY) video.load()
-        await video.play()
-        video.pause()
-        if (video.currentTime < 0.01) video.currentTime = 0.01
-        setMobileUnlocked(true)
-        seekToProgress()
-      } catch {
-        // A later touch/scroll will try again.
-      }
-    }
-
     const onScroll = () => {
-      if (video.networkState === HTMLMediaElement.NETWORK_EMPTY) video.load()
-      if (frameRef.current === null) {
-        frameRef.current = requestAnimationFrame(() => {
-          frameRef.current = null
-          seekToProgress()
-        })
-      }
+      if (frameRef.current === null) frameRef.current = requestAnimationFrame(update)
     }
 
-    const onFirstGesture = () => {
-      void primeVideo()
-    }
-
-    seekToProgress()
+    update()
     window.addEventListener('scroll', onScroll, { passive: true })
     window.addEventListener('resize', onScroll)
-    window.addEventListener('touchstart', onFirstGesture, { passive: true })
-    window.addEventListener('pointerdown', onFirstGesture, { passive: true })
 
     return () => {
       window.removeEventListener('scroll', onScroll)
       window.removeEventListener('resize', onScroll)
-      window.removeEventListener('touchstart', onFirstGesture)
-      window.removeEventListener('pointerdown', onFirstGesture)
       if (frameRef.current !== null) cancelAnimationFrame(frameRef.current)
     }
-  }, [videoReady, mobileUnlocked])
+  }, [videoReady])
 
   const time = progress * VIDEO_DURATION
   const activeStage = [...stages].reverse().find((stage) => time >= stage.time) ?? null
@@ -105,39 +73,36 @@ export default function ScrollHero() {
   return (
     <section className={styles.story} id="top" ref={sectionRef}>
       <div className={styles.sticky}>
-        <div className={styles.mediaFrame}>
-          <video
-            ref={videoRef}
-            className={styles.video}
-            muted
-            playsInline
-            preload="metadata"
-            controls={false}
-            poster="/images/imgs/IMG_0274.PNG"
-            onLoadedMetadata={(event) => {
-              const video = event.currentTarget
-              video.muted = true
-              setVideoReady(true)
-              setVideoError(false)
-              try {
-                video.currentTime = 0.01
-              } catch {}
-            }}
-            onLoadedData={() => setVideoReady(true)}
-            onCanPlay={() => setVideoReady(true)}
-            onError={() => {
-              setVideoReady(false)
-              setVideoError(true)
-            }}
-            aria-label="TerraNova backyard landscaping transformation"
-          >
-            <source src="/videos/terranova-hero-transformation.mp4" type="video/mp4" />
-          </video>
+        <video
+          ref={videoRef}
+          className={styles.video}
+          src={
+            isMobile
+              ? '/videos/gemini_generated_video_18C35B46 2.MP4'
+              : '/videos/terranova-hero-transformation.mp4'
+          }
+          muted
+          playsInline
+          preload="auto"
+          onLoadedMetadata={() => {
+            setVideoReady(true)
+            setVideoError(false)
+          }}
+          onCanPlay={() => setVideoReady(true)}
+          onError={() => {
+            setVideoReady(false)
+            setVideoError(true)
+          }}
+          aria-label="TerraNova backyard landscaping transformation"
+        />
 
-          {videoError && (
-            <div className={styles.videoStatus}>Transformation video unavailable.</div>
-          )}
-        </div>
+        {!videoReady && !videoError && (
+          <div className={styles.videoStatus}>Loading transformation…</div>
+        )}
+
+        {videoError && (
+          <div className={styles.videoStatus}>Transformation video unavailable.</div>
+        )}
 
         <div className={styles.shade} />
 
