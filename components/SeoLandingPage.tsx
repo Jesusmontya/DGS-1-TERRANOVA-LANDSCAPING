@@ -22,20 +22,14 @@ export default function SeoLandingPage({ eyebrow, title, intro, bullets, city, m
     <main className={styles.page}>
       <header className={styles.header}>
         <Link className={styles.brand} href="/">TERRANOVA <span>LANDSCAPING</span></Link>
-        <Link className={styles.ctaSmall} href="/#contact">Free Estimate</Link>
+        <a className={styles.headerCall} href="tel:+17758707224">Call 775-870-7224</a>
       </header>
-
-      <Link className={styles.quoteJump} href="/#contact" aria-label="Jump to free quote form">
-        <span>GET A QUOTE</span>
-        <strong>↓</strong>
-      </Link>
 
       <section className={styles.hero}>
         <p className={styles.eyebrow}>{eyebrow}</p>
         <h1>{title}</h1>
         <p className={styles.intro}>{intro}</p>
         <div className={styles.actions}>
-          <Link className={styles.primary} href="/#contact">Request a Free Estimate</Link>
           <a className={styles.secondary} href="tel:+17758707224">Call 775-870-7224</a>
         </div>
       </section>
@@ -49,6 +43,17 @@ export default function SeoLandingPage({ eyebrow, title, intro, bullets, city, m
         <ul>
           {bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}
         </ul>
+      </section>
+
+      <section className={styles.midQuote}>
+        <div>
+          <p className={styles.midQuoteEyebrow}>READY TO PLAN YOUR YARD?</p>
+          <h2>Get a Free Quote</h2>
+          <p>Tell us what you want to build and we’ll help you plan the next step.</p>
+        </div>
+        <Link className={styles.midQuoteButton} href="/#contact">
+          GET MY FREE QUOTE <span>↓</span>
+        </Link>
       </section>
 
       {materials.length > 0 && (
