@@ -5,16 +5,54 @@ import { sendLeadWhatsApp } from '@/lib/whatsapp'
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json()
-    const { name, phone, email, city, service, message } = body
+    const {
+      name,
+      phone,
+      email,
+      city,
+      service,
+      message,
+      budget,
+      timeline,
+      landing_page,
+      referrer,
+      utm_source,
+      utm_medium,
+      utm_campaign,
+      gclid,
+    } = body
 
     if (!name || !phone || !city || !service) {
       return NextResponse.json({ error: 'Faltan campos requeridos' }, { status: 400 })
     }
 
+    const paidMediums = new Set(['cpc', 'ppc', 'paid', 'paid_search'])
+    const source = gclid || paidMediums.has(String(utm_medium || '').toLowerCase())
+      ? 'google_ads'
+      : 'website'
+
+    const lead = {
+      name,
+      phone,
+      email: email || null,
+      city,
+      service,
+      message: message || null,
+      budget: budget || null,
+      timeline: timeline || null,
+      landing_page: landing_page || null,
+      referrer: referrer || null,
+      utm_source: utm_source || null,
+      utm_medium: utm_medium || null,
+      utm_campaign: utm_campaign || null,
+      gclid: gclid || null,
+      source,
+    }
+
     const supabase = createServerClient()
     const { data, error } = await supabase
       .from('leads')
-      .insert([{ name, phone, email, city, service, message, source: 'website' }])
+      .insert([lead])
       .select()
       .single()
 
@@ -23,7 +61,7 @@ export async function POST(req: NextRequest) {
     let whatsappSent = true
 
     try {
-      await sendLeadWhatsApp({ name, phone, email, city, service, message })
+      await sendLeadWhatsApp(lead)
     } catch (whatsappError) {
       whatsappSent = false
       console.error('WhatsApp notification failed:', whatsappError)
