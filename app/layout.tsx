@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import Analytics from '@/components/Analytics'
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -60,15 +59,35 @@ const localBusinessSchema = {
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim()
+  const adsId = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID?.trim()
+  const loaderId = gaId || adsId
+  const configLines = [
+    gaId ? `gtag('config', '${gaId}', { send_page_view: true });` : '',
+    adsId ? `gtag('config', '${adsId}');` : '',
+  ].filter(Boolean).join('\n')
+
   return (
     <html lang="en">
+      <head>
+        {loaderId && <script async src={`https://www.googletagmanager.com/gtag/js?id=${loaderId}`} />}
+        {loaderId && (
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `window.dataLayer = window.dataLayer || [];
+function gtag(){window.dataLayer.push(arguments);}
+gtag('js', new Date());
+${configLines}`,
+            }}
+          />
+        )}
+      </head>
       <body className={inter.className}>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
         />
         {children}
-        <Analytics />
       </body>
     </html>
   )
