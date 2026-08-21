@@ -25,6 +25,11 @@ export default function SeoLandingPage({ eyebrow, title, intro, bullets, city, m
         <Link className={styles.ctaSmall} href="/#contact">Free Estimate</Link>
       </header>
 
+      <Link className={styles.quoteJump} href="/#contact" aria-label="Jump to free quote form">
+        <span>GET A QUOTE</span>
+        <strong>↓</strong>
+      </Link>
+
       <section className={styles.hero}>
         <p className={styles.eyebrow}>{eyebrow}</p>
         <h1>{title}</h1>
@@ -49,8 +54,8 @@ export default function SeoLandingPage({ eyebrow, title, intro, bullets, city, m
       {materials.length > 0 && (
         <section className={styles.materials}>
           <p className={styles.eyebrow}>EXPLORE MATERIALS</p>
-          <h2>See examples before choosing a material.</h2>
-          <p className={styles.materialIntro}>These links are visual references to help you understand the look of each material. Final products, colors, and availability are confirmed during the design process.</p>
+          <h2>See the look before choosing the material.</h2>
+          <p className={styles.materialIntro}>Use these visual references to compare styles before your design call. Final products, colors, installation method, and availability are confirmed for your specific project.</p>
           <div className={styles.materialGrid}>
             {materials.map((material) => (
               <article className={styles.materialCard} key={material.name}>
@@ -59,6 +64,13 @@ export default function SeoLandingPage({ eyebrow, title, intro, bullets, city, m
                 <a href={material.photoUrl} target="_blank" rel="noopener noreferrer">View photo examples <span>↗</span></a>
               </article>
             ))}
+          </div>
+          <div className={styles.materialCta}>
+            <div>
+              <p className={styles.eyebrow}>NOT SURE WHAT TO CHOOSE?</p>
+              <h3>Tell us the look you want. We’ll help narrow down the materials.</h3>
+            </div>
+            <Link href="/#contact">Start my free quote <span>→</span></Link>
           </div>
         </section>
       )}
