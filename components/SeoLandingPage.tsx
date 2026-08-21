@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import FloatingQuoteButton from './FloatingQuoteButton'
 import styles from './SeoLandingPage.module.css'
 
 type Material = {
@@ -24,6 +25,8 @@ export default function SeoLandingPage({ eyebrow, title, intro, bullets, city, m
         <Link className={styles.brand} href="/">TERRANOVA <span>LANDSCAPING</span></Link>
         <a className={styles.headerCall} href="tel:+17758707224">Call 775-870-7224</a>
       </header>
+
+      <FloatingQuoteButton />
 
       <section className={styles.hero}>
         <p className={styles.eyebrow}>{eyebrow}</p>
