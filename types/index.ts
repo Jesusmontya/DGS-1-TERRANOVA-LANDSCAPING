@@ -7,8 +7,12 @@ export interface Lead {
   city:        string
   service:     string
   message?:    string
-  status?:     'new' | 'contacted' | 'quoted' | 'closed' | 'lost'
+  status?:     'new' | 'contacted' | 'estimate_scheduled' | 'estimate_sent' | 'won' | 'lost'
   source?:     'website' | 'google_ads' | 'maps' | 'referral'
+  estimated_value?: number | null
+  notes?:      string | null
+  first_contacted_at?: string | null
+  updated_at?: string | null
 }
 
 export interface Service {
