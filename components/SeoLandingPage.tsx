@@ -1,16 +1,23 @@
 import Link from 'next/link'
 import styles from './SeoLandingPage.module.css'
 
+type Material = {
+  name: string
+  description: string
+  photoUrl: string
+}
+
 type SeoLandingPageProps = {
   eyebrow: string
   title: string
   intro: string
   bullets: string[]
   city?: string
+  materials?: Material[]
   related?: { href: string; label: string }[]
 }
 
-export default function SeoLandingPage({ eyebrow, title, intro, bullets, city, related = [] }: SeoLandingPageProps) {
+export default function SeoLandingPage({ eyebrow, title, intro, bullets, city, materials = [], related = [] }: SeoLandingPageProps) {
   return (
     <main className={styles.page}>
       <header className={styles.header}>
@@ -38,6 +45,23 @@ export default function SeoLandingPage({ eyebrow, title, intro, bullets, city, r
           {bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}
         </ul>
       </section>
+
+      {materials.length > 0 && (
+        <section className={styles.materials}>
+          <p className={styles.eyebrow}>EXPLORE MATERIALS</p>
+          <h2>See examples before choosing a material.</h2>
+          <p className={styles.materialIntro}>These links are visual references to help you understand the look of each material. Final products, colors, and availability are confirmed during the design process.</p>
+          <div className={styles.materialGrid}>
+            {materials.map((material) => (
+              <article className={styles.materialCard} key={material.name}>
+                <h3>{material.name}</h3>
+                <p>{material.description}</p>
+                <a href={material.photoUrl} target="_blank" rel="noopener noreferrer">View photo examples <span>↗</span></a>
+              </article>
+            ))}
+          </div>
+        </section>
+      )}
 
       {city && (
         <section className={styles.local}>
