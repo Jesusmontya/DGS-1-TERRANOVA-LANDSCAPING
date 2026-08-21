@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { rememberQuoteOrigin, trackEvent } from '@/lib/analytics'
 import styles from './FloatingQuoteButton.module.css'
 
 export default function FloatingQuoteButton() {
@@ -33,7 +34,15 @@ export default function FloatingQuoteButton() {
   if (!visible) return null
 
   return (
-    <a className={styles.button} href="/#contact" aria-label="Jump to free quote form">
+    <a
+      className={styles.button}
+      href="/#contact"
+      aria-label="Jump to free quote form"
+      onClick={() => {
+        rememberQuoteOrigin()
+        trackEvent('click_free_quote', { placement: 'floating_quote', page_path: window.location.pathname })
+      }}
+    >
       <span>FREE QUOTE</span>
       <strong>↓</strong>
     </a>
