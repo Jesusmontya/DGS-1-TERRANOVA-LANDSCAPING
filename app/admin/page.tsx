@@ -1,7 +1,7 @@
 'use client'
 
 import { FormEvent, useEffect, useMemo, useState } from 'react'
-import { CheckCircle2, Clock3, LogOut, Mail, MapPin, MessageSquareText, Phone, Search, Sprout, UserRound, UsersRound, X } from 'lucide-react'
+import { CheckCircle2, CircleDollarSign, Clock3, Globe2, LogOut, Mail, MapPin, MessageSquareText, Phone, Search, Sprout, UserRound, UsersRound, X } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
 import styles from './Admin.module.css'
 
@@ -16,6 +16,14 @@ type Lead = {
   city: string
   service: string
   message?: string | null
+  budget?: string | null
+  timeline?: string | null
+  landing_page?: string | null
+  referrer?: string | null
+  utm_source?: string | null
+  utm_medium?: string | null
+  utm_campaign?: string | null
+  gclid?: string | null
   source?: string | null
   status?: LeadStatus | null
   estimated_value?: number | null
@@ -139,7 +147,7 @@ export default function AdminPage() {
     const normalized = query.trim().toLowerCase()
     return leads.filter((lead) => {
       const matchesStatus = filter === 'all' || (lead.status || 'new') === filter
-      const searchable = `${lead.name} ${lead.phone} ${lead.email || ''} ${lead.city} ${lead.service}`.toLowerCase()
+      const searchable = `${lead.name} ${lead.phone} ${lead.email || ''} ${lead.city} ${lead.service} ${lead.budget || ''} ${lead.timeline || ''}`.toLowerCase()
       return matchesStatus && (!normalized || searchable.includes(normalized))
     })
   }, [leads, filter, query])
@@ -258,8 +266,12 @@ export default function AdminPage() {
             <div className={styles.infoGrid}>
               <Info icon={<Phone size={16} />} label="Teléfono" value={selected.phone} />
               <Info icon={<Mail size={16} />} label="Email" value={selected.email || 'No proporcionado'} />
-              <Info icon={<MapPin size={16} />} label="Ciudad" value={selected.city} />
+              <Info icon={<MapPin size={16} />} label="Ciudad / proyecto" value={selected.city} />
               <Info icon={<Sprout size={16} />} label="Servicio" value={selected.service} />
+              <Info icon={<CircleDollarSign size={16} />} label="Presupuesto del cliente" value={selected.budget || 'No proporcionado'} />
+              <Info icon={<Clock3 size={16} />} label="Quiere empezar" value={selected.timeline || 'No proporcionado'} />
+              <Info icon={<Globe2 size={16} />} label="Página de entrada" value={selected.landing_page || 'No disponible'} />
+              <Info icon={<Globe2 size={16} />} label="Fuente" value={selected.utm_campaign ? `${selected.source || 'website'} · ${selected.utm_campaign}` : (selected.source || 'website')} />
             </div>
 
             <div className={styles.drawerSection}>
