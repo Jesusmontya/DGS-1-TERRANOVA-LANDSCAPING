@@ -3,10 +3,10 @@ export interface Lead {
   created_at?: string
   name:        string
   phone:       string
-  email?:      string
+  email?:      string | null
   city:        string
   service:     string
-  message?:    string
+  message?:    string | null
   budget?:     string | null
   timeline?:   string | null
   landing_page?: string | null
