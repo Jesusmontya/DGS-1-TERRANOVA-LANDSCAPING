@@ -190,8 +190,6 @@ export default function ScrollHero() {
             <span style={{ transform: `scaleX(${progress})` }} />
           </div>
         </div>
-
-        <a className={styles.cta} href="#contact">Get a Free Estimate <span>↗</span></a>
       </div>
     </section>
   )
