@@ -20,9 +20,26 @@ export async function POST(req: NextRequest) {
 
     if (error) throw error
 
-    await sendLeadWhatsApp({ name, phone, email, city, service, message })
+    let whatsappSent = true
 
-    return NextResponse.json({ success: true, id: data.id }, { status: 201 })
+    try {
+      await sendLeadWhatsApp({ name, phone, email, city, service, message })
+    } catch (whatsappError) {
+      whatsappSent = false
+      console.error('WhatsApp notification failed:', whatsappError)
+    }
+
+    return NextResponse.json(
+      {
+        success: true,
+        id: data.id,
+        whatsappSent,
+        message: whatsappSent
+          ? 'Lead created successfully'
+          : 'Lead created successfully; WhatsApp notification failed',
+      },
+      { status: 201 }
+    )
   } catch (err) {
     console.error('Lead error:', err)
     return NextResponse.json({ error: 'Error interno' }, { status: 500 })
