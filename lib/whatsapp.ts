@@ -23,13 +23,15 @@ export async function sendLeadWhatsApp(lead: Lead) {
 👤 *Nombre:* ${lead.name}
 📞 *Teléfono:* ${lead.phone}
 📧 *Email:* ${lead.email || 'No proporcionó'}
-📍 *Ciudad:* ${lead.city}
+📍 *Ciudad / proyecto:* ${lead.city}
 🛠 *Servicio:* ${lead.service}
+💵 *Presupuesto:* ${lead.budget || 'No proporcionó'}
+🗓 *Cuándo quiere empezar:* ${lead.timeline || 'No proporcionó'}
 💬 *Mensaje:* ${lead.message || 'Sin mensaje adicional'}
+🌐 *Página de entrada:* ${lead.landing_page || 'No disponible'}
+📣 *Fuente:* ${lead.source || 'website'}${lead.utm_campaign ? ` — ${lead.utm_campaign}` : ''}
 
 ⏰ ${new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angeles' })}
-
-👉 Responde en menos de 5 minutos — los leads rápidos cierran 3x más.
 `.trim()
 
   await client.messages.create({
