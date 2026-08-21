@@ -1,5 +1,6 @@
 "use client"
 import ScrollHero from '../components/ScrollHero'
+import FloatingQuoteButton from '../components/FloatingQuoteButton'
 import floating from './FloatingContact.module.css'
 
 const services = [
@@ -42,6 +43,7 @@ export default function Home() {
       </header>
 
       <ScrollHero />
+      <FloatingQuoteButton />
 
       <section className="intro section page-width" id="about">
         <div><p className="eyebrow">WHY TERRANOVA</p><h2>A local team that treats your property like it matters.</h2></div>
