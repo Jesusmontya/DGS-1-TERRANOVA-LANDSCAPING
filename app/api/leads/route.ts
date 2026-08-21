@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createServerClient } from '@/lib/supabase'
 import { sendLeadWhatsApp } from '@/lib/whatsapp'
+import type { Lead } from '@/types'
 
 export async function POST(req: NextRequest) {
   try {
@@ -27,11 +28,11 @@ export async function POST(req: NextRequest) {
     }
 
     const paidMediums = new Set(['cpc', 'ppc', 'paid', 'paid_search'])
-    const source = gclid || paidMediums.has(String(utm_medium || '').toLowerCase())
+    const source: NonNullable<Lead['source']> = gclid || paidMediums.has(String(utm_medium || '').toLowerCase())
       ? 'google_ads'
       : 'website'
 
-    const lead = {
+    const lead: Lead = {
       name,
       phone,
       email: email || null,
