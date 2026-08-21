@@ -56,10 +56,20 @@ const statusLabel = (status?: LeadStatus | null) =>
 const money = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 })
 const dateFmt = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })
 
+function usernameToEmail(username: string) {
+  return `${username.trim().toLowerCase()}@terranova.local`
+}
+
+function displayUsername(email?: string | null, metadataUsername?: string) {
+  if (metadataUsername) return metadataUsername
+  return email?.split('@')[0] || 'User'
+}
+
 export default function AdminPage() {
   const [sessionToken, setSessionToken] = useState<string | null>(null)
+  const [currentUser, setCurrentUser] = useState('User')
   const [authLoading, setAuthLoading] = useState(true)
-  const [email, setEmail] = useState('')
+  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [authError, setAuthError] = useState('')
   const [leads, setLeads] = useState<Lead[]>([])
@@ -74,11 +84,14 @@ export default function AdminPage() {
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
-      setSessionToken(data.session?.access_token || null)
+      const session = data.session
+      setSessionToken(session?.access_token || null)
+      setCurrentUser(displayUsername(session?.user.email, session?.user.user_metadata?.username))
       setAuthLoading(false)
     })
     const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
       setSessionToken(session?.access_token || null)
+      setCurrentUser(displayUsername(session?.user.email, session?.user.user_metadata?.username))
       setAuthLoading(false)
     })
     return () => listener.subscription.unsubscribe()
@@ -118,11 +131,14 @@ export default function AdminPage() {
     event.preventDefault()
     setAuthError('')
     setAuthLoading(true)
-    const { error } = await supabase.auth.signInWithPassword({ email, password })
+    const cleanUsername = username.trim().toLowerCase()
+    const { error } = await supabase.auth.signInWithPassword({ email: usernameToEmail(cleanUsername), password })
     if (error) {
-      setAuthError(error.message)
+      setAuthError('Invalid username or password')
       setAuthLoading(false)
+      return
     }
+    setCurrentUser(cleanUsername)
   }
 
   async function updateLead(id: string, updates: Partial<Lead>) {
@@ -192,12 +208,12 @@ export default function AdminPage() {
             <p>Sign in to review new requests, follow up fast, and move estimates toward booked work.</p>
           </div>
           <form onSubmit={handleLogin} className={styles.loginForm}>
-            <label>Email<input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required autoComplete="email" /></label>
+            <label>Username<input type="text" value={username} onChange={(e) => setUsername(e.target.value)} required autoComplete="username" /></label>
             <label>Password<input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required autoComplete="current-password" /></label>
             {authError && <p className={styles.errorText}>{authError}</p>}
             <button type="submit">Sign in</button>
           </form>
-          <p className={styles.loginHint}>Access is limited to TerraNova team accounts created in Supabase Auth.</p>
+          <p className={styles.loginHint}>Access is limited to TerraNova team accounts.</p>
         </section>
       </main>
     )
@@ -213,14 +229,14 @@ export default function AdminPage() {
           <a href="#analytics"><BarChart3 size={18} /> Analytics</a>
         </nav>
         <div className={styles.sidebarBottom}>
-          <div className={styles.userChip}><UserRound size={17} /><div><strong>TerraNova Team</strong><small>Admin access</small></div></div>
+          <div className={styles.userChip}><UserRound size={17} /><div><strong>{currentUser}</strong><small>Admin access</small></div></div>
           <button onClick={() => supabase.auth.signOut()}><LogOut size={17} /> Sign out</button>
         </div>
       </aside>
 
       <section className={styles.main}>
         <header className={styles.topbar}>
-          <div><p className={styles.eyebrow}>TERRANOVA LANDSCAPING</p><h1>Lead Dashboard</h1></div>
+          <div><p className={styles.eyebrow}>TERRANOVA LANDSCAPING</p><h1>Hola, {currentUser}</h1></div>
           <button className={styles.refreshButton} onClick={() => loadLeads()} disabled={loading}>{loading ? 'Refreshing…' : 'Refresh leads'}</button>
         </header>
 
