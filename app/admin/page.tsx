@@ -142,15 +142,19 @@ export default function AdminPage() {
     event.preventDefault()
     setAuthError('')
     setAuthLoading(true)
-    const cleanUser = username.trim().toLowerCase().replace(/[^a-z0-9._-]/g, '')
-    const email = `${cleanUser}@terranova.local`
+
+    const rawLogin = username.trim().toLowerCase()
+    const cleanUser = rawLogin.replace(/[^a-z0-9._-]/g, '')
+    const email = rawLogin.includes('@') ? rawLogin : `${cleanUser}@terranovalandscapingnv.com`
     const { error } = await supabase.auth.signInWithPassword({ email, password })
+
     if (error) {
       setAuthError('Usuario o contraseña incorrectos')
       setAuthLoading(false)
       return
     }
-    setCurrentUser(cleanUser)
+
+    setCurrentUser(email.split('@')[0])
   }
 
   async function updateLead(id: string, updates: Partial<Lead>) {
@@ -207,7 +211,7 @@ export default function AdminPage() {
           <div className={styles.loginBrand}><span>TN</span><div><strong>TerraNova</strong><small>CRM</small></div></div>
           <div className={styles.loginCopy}><p className={styles.eyebrow}>PANEL PRIVADO</p><h1>Admin de leads</h1><p>Entra para ver clientes nuevos, dar seguimiento y cerrar trabajos.</p></div>
           <form onSubmit={handleLogin} className={styles.loginForm}>
-            <label>Usuario<input value={username} onChange={(e) => setUsername(e.target.value)} required autoComplete="username" /></label>
+            <label>Usuario o email<input value={username} onChange={(e) => setUsername(e.target.value)} required autoComplete="username" /></label>
             <label>Contraseña<input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required autoComplete="current-password" /></label>
             {authError && <p className={styles.errorText}>{authError}</p>}
             <button type="submit">Entrar</button>
