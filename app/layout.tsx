@@ -59,7 +59,7 @@ const localBusinessSchema = {
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim()
+  const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim() || 'G-LNP5MPYRXX'
   const adsId = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID?.trim()
   const loaderId = gaId || adsId
   const configLines = [
