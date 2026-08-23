@@ -1,100 +1,162 @@
 import type { Metadata } from 'next'
-import SeoLandingPage from '@/components/SeoLandingPage'
+import Image from 'next/image'
+import Link from 'next/link'
+import FloatingQuoteButton from '@/components/FloatingQuoteButton'
+import styles from './page.module.css'
 
 const canonical = 'https://terranovalandscapingnv.com/backyard-design'
 
 export const metadata: Metadata = {
   title: 'Backyard Design Reno NV | Custom Landscape Design',
-  description: 'Custom backyard design in Reno, NV with layout planning, material guidance, project-cost factors, and a clear path from idea to landscape construction.',
+  description: 'Custom backyard design in Reno, NV with layout planning, material guidance, 2D/3D design options, and a clear path from idea to construction.',
   alternates: { canonical },
 }
 
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'Backyard Design and Landscape Planning in Reno, NV',
+  description: 'Custom backyard design and landscape planning in Reno with layout, material guidance, and 2D or 3D design options before construction.',
+  url: canonical,
+  provider: { '@id': 'https://terranovalandscapingnv.com/#business' },
+  areaServed: [{ '@type': 'Place', name: 'Reno, Nevada' }, { '@type': 'Place', name: 'Washoe County, Nevada' }],
+}
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'TerraNova Landscaping', item: 'https://terranovalandscapingnv.com/' },
+    { '@type': 'ListItem', position: 2, name: 'Backyard Design Reno', item: canonical },
+  ],
+}
+
+const ideas = [
+  { src: '/images/imgs/IMG_0272.PNG', title: 'Outdoor Gathering Space', text: 'Plan seating, circulation, patios, and usable zones around the way you want to live outside.' },
+  { src: '/images/imgs/IMG_0252.PNG', title: 'Paver Patio', text: 'Build a defined hardscape area that connects naturally with the rest of the yard.' },
+  { src: '/images/imgs/IMG_0250.PNG', title: 'Low-Water Landscape', text: 'Combine turf, rock, planting, and hardscape into a lower-water landscape plan.' },
+  { src: '/images/imgs/IMG_0273.PNG', title: 'Custom Hardscape', text: 'Use walls, masonry, concrete, and transitions to give the yard structure.' },
+  { src: '/images/imgs/IMG_0276.PNG', title: 'Complete Backyard', text: 'Bring multiple landscape elements together as one coordinated project.' },
+]
+
+const costs = [
+  ['Site preparation', 'Demolition, access, grading, excavation, and existing property conditions can change the amount of work required.'],
+  ['Square footage', 'Larger patios, turf areas, walls, concrete, and planting zones increase labor and material quantities.'],
+  ['Material selection', 'Pavers, stone, wall block, turf, rock, concrete finish, and other choices affect the final scope.'],
+  ['Project complexity', 'Irrigation, elevation changes, fencing, masonry, and multiple connected features add construction steps.'],
+]
+
 export default function BackyardDesignPage() {
   return (
-    <SeoLandingPage
-      eyebrow="BACKYARD DESIGN · RENO, NV"
-      title="Backyard design in Reno, built around your space from the start."
-      intro="You do not need to know the perfect layout or which materials to use before calling. TerraNova helps you organize the space, compare options, and turn an unfinished idea into a clear landscape plan."
-      whatToExpectTitle="Start with what you want the yard to do—not a finished design."
-      whatToExpectCopy="We can work from a blank yard, an outdated yard, or a collection of ideas. The goal is to make the layout, materials, priorities, and next steps understandable before construction starts."
-      bullets={[
-        'Free project conversation to understand your goals',
-        'Custom layout planning around the way you use the yard',
-        'Material guidance for water use, maintenance, heat, and seasonal conditions',
-        'Clear scope and next steps before construction begins',
-      ]}
-      detailSections={[
-        {
-          eyebrow: 'DESIGN FROM ZERO',
-          title: 'Not sure what belongs in your backyard? That is where the process starts.',
-          intro: 'Instead of asking you to arrive with a finished plan, we break the project into decisions you can actually compare.',
-          items: [
-            { title: 'How you want to use the space', text: 'Start with everyday use: entertaining, open space, low maintenance, privacy, planting, or a combination.' },
-            { title: 'Where each feature should go', text: 'The layout should connect patios, paths, planting, turf, hardscape, and access without making the yard feel pieced together.' },
-            { title: 'Which materials fit the plan', text: 'Compare pavers, concrete, rock, turf, retaining-wall materials, and other finishes based on the look and maintenance you want.' },
-            { title: 'What should be built first', text: 'Irrigation, grading, hardscape, walls, fencing, planting, and finish materials need a practical construction order.' },
-          ],
-        },
-        {
-          eyebrow: 'BACKYARD IDEAS',
-          title: 'Build the yard as one system instead of separate projects.',
-          items: [
-            { title: 'Patios & gathering areas', text: 'Create usable outdoor space with pavers, concrete, masonry, and a layout sized around the property.' },
-            { title: 'Artificial turf & xeriscaping', text: 'Use green space where it adds value and lower-water materials where they make more sense.' },
-            { title: 'Retaining walls & grade changes', text: 'Define levels, manage changes in elevation, and create more intentional landscape zones.' },
-            { title: 'Fencing, irrigation & planting', text: 'Plan the supporting pieces at the same time so the finished yard works as a complete project.' },
-          ],
-        },
-        {
-          eyebrow: 'PROJECT COST',
-          title: 'What affects the cost of a complete backyard project?',
-          intro: 'TerraNova can discuss pricing once the scope is understood. The biggest cost drivers usually come from the work required and the materials selected—not just the size of the yard.',
-          items: [
-            { title: 'Site preparation', text: 'Demolition, access, grading, excavation, and existing conditions can change the amount of work required.' },
-            { title: 'Square footage', text: 'Larger patios, turf areas, walls, concrete, and planting zones increase labor and material quantities.' },
-            { title: 'Material selection', text: 'Paver style, stone, wall block, turf, rock, concrete finish, and other choices affect the final scope.' },
-            { title: 'Project complexity', text: 'Drainage, irrigation, elevation changes, fencing, masonry, and multiple connected features add construction steps.' },
-          ],
-        },
-      ]}
-      materialsIntro="These are the material categories we can discuss during design. We are leaving the photo references open until TerraNova confirms the exact products or supplier examples it wants customers to see."
-      materials={[
-        { name: 'Pavers', description: 'For patios, walkways, gathering areas, and defined hardscape zones.' },
-        { name: 'Natural Stone / Flagstone', description: 'A natural finish for paths, accents, steps, and selected outdoor areas.' },
-        { name: 'Decorative Gravel / Rock', description: 'A lower-water ground-cover option available in different sizes and tones.' },
-        { name: 'Artificial Turf', description: 'A green, low-water surface for usable lawn-style areas.' },
-        { name: 'Concrete', description: 'A versatile option for walkways, pads, patios, and clean modern layouts.' },
-        { name: 'Retaining Wall Block', description: 'Used to define grade changes, raised areas, and structured landscape zones.' },
-      ]}
-      process={{
-        title: 'From blank yard to a buildable plan.',
-        intro: 'The exact project can vary, but the decision flow stays simple.',
-        steps: [
-          { title: 'Tell us your goals', text: 'Share what you like, what is not working, and how you want to use the yard.' },
-          { title: 'Plan the layout', text: 'Organize the major zones and decide how they connect.' },
-          { title: 'Choose materials', text: 'Compare practical options based on style, maintenance, and project needs.' },
-          { title: 'Define the scope', text: 'Confirm what is included before moving into construction.' },
-          { title: 'Build the yard', text: 'Complete the project in the right order from preparation through finish work.' },
-        ],
-      }}
-      faqs={[
-        { question: 'Do I need to have a backyard design before I contact TerraNova?', answer: 'No. You can start with a general goal, photos you like, or simply the problems you want to solve. TerraNova can help organize those ideas into a clearer plan.' },
-        { question: 'Can one project include pavers, turf, irrigation, walls, fencing, and planting?', answer: 'Those elements can be planned together when they fit the property and project scope. The quote process is where the exact combination is confirmed.' },
-        { question: 'Can you help me choose materials?', answer: 'Yes. Material guidance is part of the planning conversation. Exact products, colors, availability, and installation details are confirmed for the specific project.' },
-        { question: 'How do I get an exact price?', answer: 'Start with the free quote form. Once TerraNova understands the property, desired features, materials, and site conditions, the team can discuss the appropriate next step for pricing.' },
-      ]}
-      related={[
-        { href: '/paver-patio-reno', label: 'Paver Patios' },
-        { href: '/xeriscaping-reno', label: 'Xeriscaping' },
-        { href: '/locations/sparks', label: 'Landscaping in Sparks' },
-      ]}
-      schema={{
-        canonical,
-        serviceName: 'Backyard Design and Landscape Planning in Reno, NV',
-        description: 'Custom backyard design and landscape planning in Reno with layout and material guidance before construction.',
-        areaServed: ['Reno, Nevada', 'Washoe County, Nevada'],
-        breadcrumbLabel: 'Backyard Design Reno',
-      }}
-    />
+    <main className={styles.page}>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <FloatingQuoteButton />
+
+      <section className={styles.hero}>
+        <div className={styles.heroInner}>
+          <p className={styles.eyebrow}>BACKYARD DESIGN · RENO, NV</p>
+          <h1>Custom backyard design in Reno, NV.</h1>
+          <p>From an unfinished yard to a complete plan you can actually visualize and build. TerraNova helps you work through the layout, materials, features, and construction direction from the start.</p>
+          <div className={styles.actions}>
+            <Link className={styles.primary} href="/#contact">Get a Free Estimate</Link>
+            <a className={styles.secondary} href="tel:+17758707224">Call 775-870-7224</a>
+          </div>
+        </div>
+      </section>
+
+      <div className={styles.trust}>
+        <span>15+ Years Landscaping Experience</span>
+        <span>Free Project Estimates</span>
+        <span>2D / 3D Design Options</span>
+      </div>
+
+      <section className={`${styles.section} ${styles.split}`}>
+        <div className={styles.photo} role="img" aria-label="TerraNova completed backyard landscaping project" />
+        <div className={styles.copy}>
+          <p className={styles.eyebrow}>DESIGN FROM ZERO</p>
+          <h2>You do not need to have the backyard figured out.</h2>
+          <p>Start with what you want the yard to do. TerraNova can help organize the space, compare materials, choose priorities, and turn a dirt yard, outdated yard, or loose collection of ideas into a clearer plan.</p>
+          <div className={styles.pillList}><span>Layout</span><span>Pavers</span><span>Turf</span><span>Concrete</span><span>Walls</span><span>Fencing</span><span>Planting</span></div>
+          <Link className={styles.textLink} href="/#contact">Start Your Project →</Link>
+        </div>
+      </section>
+
+      <section className={styles.section}>
+        <div className={styles.heading}>
+          <p className={styles.eyebrow}>BACKYARD IDEAS</p>
+          <h2>What could your backyard become?</h2>
+          <p>The goal is not to copy a template. It is to understand what fits your property, your priorities, and the way you want to use the space.</p>
+        </div>
+        <div className={styles.ideasGrid}>
+          {ideas.map((idea) => <article className={styles.idea} key={idea.title}><Image src={idea.src} alt={`${idea.title} TerraNova landscaping project`} width={1200} height={900} sizes="(max-width: 900px) 100vw, 40vw" /><div><h3>{idea.title}</h3><p>{idea.text}</p></div></article>)}
+        </div>
+      </section>
+
+      <section className={styles.section}>
+        <div className={styles.designBuild}>
+          <div className={styles.designCopy}>
+            <p className={styles.eyebrow}>2D + 3D DESIGN</p>
+            <h2>See the direction before construction starts.</h2>
+            <p>When appropriate, TerraNova can use 2D and 3D landscape design to make the layout easier to understand before the project moves into construction.</p>
+            <div className={styles.stepsMini}>
+              <article><strong>Plan the layout</strong><span>Organize the major zones and how they connect.</span></article>
+              <article><strong>Choose materials</strong><span>Compare practical finishes based on style and project needs.</span></article>
+              <article><strong>Visualize the project</strong><span>Use design tools when they make the direction clearer.</span></article>
+              <article><strong>Build the yard</strong><span>Move from planning into a defined construction scope.</span></article>
+            </div>
+          </div>
+          <div className={styles.designImage} role="img" aria-label="TerraNova landscape design and completed backyard inspiration" />
+        </div>
+      </section>
+
+      <section className={styles.dark}>
+        <div className={styles.darkInner}>
+          <p className={styles.eyebrow}>HOW IT WORKS</p>
+          <h2>From blank yard to a buildable plan.</h2>
+          <div className={styles.process}>
+            {[
+              ['01','Consultation','Share what you like, what is not working, and how you want to use the yard.'],
+              ['02','Planning','Organize the layout, priorities, and major landscape zones.'],
+              ['03','Design','Use planning and, when appropriate, 2D or 3D design to visualize the project.'],
+              ['04','Materials','Compare pavers, concrete, turf, rock, walls, and other finishes.'],
+              ['05','Construction','Define the scope and build the project in the right order.'],
+            ].map(([n,t,p]) => <article key={n}><span>{n}</span><h3>{t}</h3><p>{p}</p></article>)}
+          </div>
+        </div>
+      </section>
+
+      <section className={styles.section}>
+        <div className={styles.heading}><p className={styles.eyebrow}>PROJECT COST</p><h2>What affects the cost of a complete backyard project?</h2><p>Exact pricing depends on the property and scope. These are the main factors that can change the amount of labor, preparation, and material required.</p></div>
+        <div className={styles.costGrid}>{costs.map(([title,text]) => <article key={title}><h3>{title}</h3><p>{text}</p></article>)}</div>
+      </section>
+
+      <section className={styles.section}>
+        <div className={styles.heading}><p className={styles.eyebrow}>MATERIAL PLANNING</p><h2>Build the yard as one system instead of separate projects.</h2><p>Material guidance is part of the planning conversation. Exact products, colors, availability, and installation details are confirmed for the specific project.</p></div>
+        <div className={styles.materials}>
+          {[
+            ['Pavers','Patios, walkways, gathering areas, and defined hardscape zones.'],['Natural Stone / Flagstone','Natural finishes for paths, accents, steps, and selected outdoor areas.'],['Decorative Gravel / Rock','A lower-water ground-cover option available in different sizes and tones.'],['Artificial Turf','A green, lower-water surface for usable lawn-style areas.'],['Concrete','Walkways, pads, patios, and clean modern layouts.'],['Retaining Wall Block','Grade changes, raised areas, and structured landscape zones.']
+          ].map(([title,text]) => <article key={title}><h3>{title}</h3><p>{text}</p></article>)}
+        </div>
+      </section>
+
+      <section className={`${styles.section} ${styles.faq}`}>
+        <div className={styles.heading}><p className={styles.eyebrow}>COMMON QUESTIONS</p><h2>Questions before you start your backyard design.</h2></div>
+        <details><summary>Do I need to have a backyard design before I contact TerraNova?</summary><p>No. You can start with a general goal, photos you like, or simply the problems you want to solve. TerraNova can help organize those ideas into a clearer plan.</p></details>
+        <details><summary>Can one project include pavers, turf, irrigation, walls, fencing, and planting?</summary><p>Those elements can be planned together when they fit the property and project scope. The quote process is where the exact combination is confirmed.</p></details>
+        <details><summary>Can you help me choose materials?</summary><p>Yes. Material guidance is part of the planning conversation. Exact products, colors, availability, and installation details are confirmed for the specific project.</p></details>
+        <details><summary>How do I get an exact price?</summary><p>Start with the free quote form. Once TerraNova understands the property, desired features, materials, and site conditions, the team can discuss the appropriate next step for pricing.</p></details>
+        <div className={styles.related}><Link href="/landscaping-reno-nv">Landscaping Reno</Link><Link href="/paver-patio-reno">Paver Patios</Link><Link href="/xeriscaping-reno">Xeriscaping</Link><Link href="/locations/sparks">Landscaping in Sparks</Link></div>
+      </section>
+
+      <section className={styles.final}>
+        <div className={styles.finalInner}>
+          <p className={styles.eyebrow}>READY WHEN YOU ARE</p>
+          <h2>Ready to turn your backyard into a real plan?</h2>
+          <p>Tell TerraNova what you want to change, what you are considering, and where the property is. You do not need to have every detail decided before reaching out.</p>
+          <div className={styles.actions}><Link className={styles.primary} href="/#contact">Get Your Free Estimate</Link><a className={styles.secondary} href="tel:+17758707224">Call 775-870-7224</a></div>
+        </div>
+      </section>
+    </main>
   )
 }
