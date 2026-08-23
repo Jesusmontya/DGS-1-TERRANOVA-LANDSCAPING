@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
-import SeoLandingPage from '@/components/SeoLandingPage'
+import Link from 'next/link'
+import FloatingQuoteButton from '@/components/FloatingQuoteButton'
 import styles from './page.module.css'
 
 const canonical = 'https://terranovalandscapingnv.com/landscaping-reno-nv'
@@ -11,129 +12,139 @@ export const metadata: Metadata = {
   alternates: { canonical },
 }
 
-const photos = [
-  { src: '/images/imgs/IMG_0272.PNG', alt: 'Completed TerraNova landscaping project with finished outdoor hardscape' },
-  { src: '/images/imgs/IMG_0273.PNG', alt: 'TerraNova backyard landscaping project with completed outdoor features' },
-  { src: '/images/imgs/IMG_0274.PNG', alt: 'Completed custom landscape project by TerraNova Landscaping' },
+const services = [
+  { title: 'Backyard Design', text: 'Plan the layout, materials, features, and priorities before construction starts.', image: '/images/imgs/IMG_0249.PNG', href: '/backyard-design' },
+  { title: 'Pavers', text: 'Patios, walkways, gathering areas, and hardscape zones planned around the property.', image: '/images/imgs/IMG_0252.PNG', href: '/paver-patio-reno' },
+  { title: 'Concrete', text: 'Outdoor concrete surfaces integrated into a complete landscape plan.', image: '/images/imgs/IMG_0251.PNG', href: '/paver-patio-reno' },
+  { title: 'Hardscaping', text: 'Structural outdoor features that define circulation, use, and the finished layout.', image: '/images/imgs/IMG_0271.PNG', href: '/paver-patio-reno' },
+  { title: 'Retaining Walls', text: 'Functional and visual wall systems for grade changes and defined landscape areas.', image: '/images/imgs/IMG_0274.PNG', href: '/paver-patio-reno' },
+  { title: 'Fencing', text: 'Coordinate fencing with the overall backyard transformation when it fits the scope.', image: '/images/imgs/IMG_0275.PNG', href: '/backyard-design' },
 ]
+
+const portfolio = [
+  { src: '/images/imgs/IMG_0272.PNG', alt: 'TerraNova completed landscaping project in Northern Nevada' },
+  { src: '/images/imgs/IMG_0273.PNG', alt: 'Completed TerraNova backyard landscape project' },
+  { src: '/images/imgs/IMG_0274.PNG', alt: 'TerraNova hardscape and landscaping project' },
+  { src: '/images/imgs/IMG_0275.PNG', alt: 'Finished outdoor landscape project by TerraNova' },
+  { src: '/images/imgs/IMG_0276.PNG', alt: 'TerraNova residential landscaping project' },
+]
+
+const faqs = [
+  ['How much does landscaping cost in Reno?', 'Pricing depends on yard size, access, site preparation, materials, design, and the amount of construction involved. TerraNova can review your project and provide a free estimate based on the actual scope.'],
+  ['Can TerraNova design my backyard?', 'Yes. TerraNova can help plan a backyard from the beginning and can use 2D or 3D landscape design when appropriate for the project.'],
+  ['Do you install pavers?', 'Yes. Pavers are part of TerraNova’s landscaping and hardscape services for patios, walkways, gathering areas, and other outdoor features.'],
+  ['Can you build an entire backyard from scratch?', 'Yes, when the project scope is a fit. TerraNova can help with planning, design, material decisions, and construction for unfinished or dirt backyards.'],
+  ['Do you provide free landscaping estimates?', 'Yes. TerraNova offers a free consultation and project estimate so you can discuss the property, goals, and next steps.'],
+  ['What areas do you serve?', 'TerraNova primarily serves Reno and also works in Sparks, Verdi, Washoe County, the Lake Tahoe area, and nearby communities depending on the project.'],
+]
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'Landscaping Services in Reno, NV',
+  description: 'Custom landscaping, landscape design, hardscaping, pavers, concrete, retaining walls, fencing, masonry, and backyard transformations in Reno, Nevada.',
+  url: canonical,
+  provider: { '@id': 'https://terranovalandscapingnv.com/#business' },
+  areaServed: ['Reno, Nevada', 'Sparks, Nevada', 'Washoe County, Nevada', 'Verdi, Nevada', 'Lake Tahoe'].map((name) => ({ '@type': 'Place', name })),
+}
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'TerraNova Landscaping', item: 'https://terranovalandscapingnv.com/' },
+    { '@type': 'ListItem', position: 2, name: 'Landscaping Reno NV', item: canonical },
+  ],
+}
 
 export default function LandscapingRenoPage() {
   return (
-    <>
-      <SeoLandingPage
-        eyebrow="LANDSCAPING · RENO, NV"
-        title="Landscaping in Reno, NV designed and built around your property."
-        intro="TerraNova Landscaping helps Reno homeowners turn unfinished, outdated, or underused yards into complete outdoor spaces. We can help plan the layout, choose materials, visualize the project, and build the landscaping and hardscape as one connected project."
-        whatToExpectTitle="You do not need to figure out the whole yard before you call."
-        whatToExpectCopy="Start with the property, the problems you want to solve, and the way you want to use the space. TerraNova can help organize the design, materials, construction priorities, and next steps before work begins."
-        bullets={[
-          'Backed by 15 years of landscaping experience',
-          'Residential landscaping with commercial work available by scope',
-          '2D and 3D landscape design options when appropriate',
-          'Free consultation and project estimate',
-        ]}
-        detailSections={[
-          {
-            eyebrow: 'COMPLETE LANDSCAPING SERVICES',
-            title: 'Design, hardscape, and construction for complete outdoor projects.',
-            intro: 'TerraNova can coordinate the major pieces of a yard transformation so the space feels planned as one project instead of a collection of unrelated improvements.',
-            items: [
-              { title: 'Pavers', text: 'Plan patios, walkways, gathering areas, borders, and other paver installations around the way the yard will be used.' },
-              { title: 'Concrete', text: 'Incorporate concrete patios, walkways, pads, and other outdoor surfaces into the overall landscape plan.' },
-              { title: 'Hardscaping', text: 'Use structural outdoor elements to define circulation, gathering spaces, transitions, and the finished layout.' },
-              { title: 'Retaining Walls', text: 'Add functional or visual wall systems where the property and project scope call for grade transitions or defined areas.' },
-              { title: 'Fencing', text: 'Coordinate fencing with the rest of the landscape transformation when it is part of the project.' },
-              { title: 'Masonry', text: 'Add masonry details and outdoor construction elements that support the overall design.' },
-              { title: '2D Landscape Design', text: 'Organize the yard layout and major features before construction so the project direction is easier to understand.' },
-              { title: '3D Landscape Design', text: 'When appropriate, use 3D design to help visualize how the finished backyard can come together.' },
-            ],
-          },
-          {
-            eyebrow: 'DESIGN + BUILD',
-            title: 'Know you want a better backyard but not sure what to build?',
-            intro: 'That is a normal starting point. TerraNova can help work through the decisions that turn an unfinished yard into a buildable plan.',
-            items: [
-              { title: 'Plan the layout', text: 'Decide how patios, paths, open areas, walls, fencing, and landscape zones should work together.' },
-              { title: 'Compare materials', text: 'Discuss pavers, concrete, stone, wall materials, and other finishes based on the look and practical needs of the property.' },
-              { title: 'Visualize the project', text: 'Use planning and 2D or 3D design when appropriate to make the direction easier to understand before construction.' },
-              { title: 'Build from zero', text: 'For the right scope, TerraNova can help take a dirt or unfinished backyard from initial planning through landscape construction.' },
-            ],
-          },
-          {
-            eyebrow: 'LANDSCAPING FOR RENO PROPERTIES',
-            title: 'Outdoor spaces in Northern Nevada need practical material and layout decisions.',
-            intro: 'Reno properties deal with a dry climate, strong seasonal temperature changes, and outdoor spaces that need to hold up while still looking intentional.',
-            items: [
-              { title: 'Water-conscious choices', text: 'The layout can combine usable hardscape and landscape areas with lower-water decisions where they make sense for the property.' },
-              { title: 'Durable materials', text: 'Material selection should consider appearance, maintenance expectations, exposure, and the way the outdoor space will be used.' },
-              { title: 'Outdoor living', text: 'Patios, walkways, walls, and gathering areas can be planned around how homeowners actually use the yard.' },
-              { title: 'Property-specific planning', text: 'Access, grade, existing conditions, layout, and project priorities all influence the right design and construction approach.' },
-            ],
-          },
-          {
-            eyebrow: 'WHY TERRANOVA',
-            title: 'A clearer way to move from idea to finished landscape.',
-            items: [
-              { title: '15 years of experience', text: 'TerraNova is backed by approximately 15 years of landscaping experience across design, hardscape, and construction work.' },
-              { title: 'Personalized planning', text: 'The process starts with your property and goals instead of forcing every project into the same layout.' },
-              { title: 'Material guidance', text: 'Get help understanding options and what makes sense before exact products and finishes are finalized.' },
-              { title: 'One connected project', text: 'Design and construction can be planned together so the finished yard feels intentional from one area to the next.' },
-            ],
-          },
-        ]}
-        process={{
-          title: 'From first conversation to completed outdoor space.',
-          intro: 'The exact scope varies by property, but the planning process stays clear.',
-          steps: [
-            { title: 'Consultation', text: 'Talk through the property, what is not working, your goals, and the outdoor space you want to create.' },
-            { title: 'Landscape planning', text: 'Discuss the layout, features, materials, and realistic direction for the project.' },
-            { title: 'Design', text: 'Use planning and, when appropriate, 2D or 3D design to help visualize the finished space.' },
-            { title: 'Construction', text: 'Build the agreed landscaping, hardscape, concrete, walls, fencing, masonry, and other included elements.' },
-            { title: 'Final walkthrough', text: 'Review the completed work and the finished project with the customer.' },
-          ],
-        }}
-        city="Reno, NV"
-        localBody="TerraNova serves Reno along with Sparks, Verdi, Washoe County, the Lake Tahoe area, and surrounding communities within roughly 1.5 hours of Reno. Exact availability depends on the property, scope, and scheduling."
-        faqs={[
-          { question: 'How much does landscaping cost in Reno?', answer: 'The cost depends on the yard size, site preparation, access, materials, design, and the amount of construction involved. TerraNova can review the property and project goals before providing an estimate.' },
-          { question: 'Can TerraNova design my backyard?', answer: 'Yes. TerraNova can help plan a backyard from the beginning and offers 2D and 3D landscape design options when they fit the project.' },
-          { question: 'Do you install pavers?', answer: 'Yes. Pavers are part of TerraNova’s hardscape and landscaping services and can be used for patios, walkways, gathering areas, and other outdoor features.' },
-          { question: 'Can you build an entire backyard from scratch?', answer: 'Yes, when the project scope is a fit. TerraNova can help with planning, design, material decisions, and construction for unfinished or dirt backyards.' },
-          { question: 'Do you provide free landscaping estimates?', answer: 'Yes. TerraNova offers a free consultation and estimate so you can discuss the property, project direction, and next steps.' },
-          { question: 'What areas do you serve?', answer: 'TerraNova primarily serves Reno and also works in Sparks, Verdi, Washoe County, the Lake Tahoe area, and nearby communities depending on the project.' },
-        ]}
-        related={[
-          { href: '/backyard-design', label: 'Backyard Design' },
-          { href: '/paver-patio-reno', label: 'Paver Patios & Hardscape' },
-          { href: '/xeriscaping-reno', label: 'Xeriscaping' },
-          { href: '/locations/sparks', label: 'Landscaping in Sparks' },
-          { href: '/locations/verdi', label: 'Landscaping in Verdi' },
-          { href: '/locations/lake-tahoe', label: 'Landscaping in Lake Tahoe' },
-        ]}
-        schema={{
-          canonical,
-          serviceName: 'Landscaping Services in Reno, NV',
-          description: 'Custom landscaping, landscape design, hardscaping, pavers, concrete, retaining walls, fencing, masonry, and backyard transformations in Reno, Nevada.',
-          areaServed: ['Reno, Nevada', 'Sparks, Nevada', 'Washoe County, Nevada', 'Verdi, Nevada', 'Lake Tahoe'],
-          breadcrumbLabel: 'Landscaping Reno NV',
-        }}
-      />
+    <main className={styles.page}>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <FloatingQuoteButton />
 
-      <section className={styles.projects} aria-labelledby="reno-projects-heading">
-        <div className={styles.heading}>
-          <p>REAL TERRANOVA WORK</p>
-          <h2 id="reno-projects-heading">Landscaping projects from the TerraNova portfolio.</h2>
-          <span>Real project photography is used here rather than stock or AI-generated work. As the portfolio grows, additional Reno-area projects can be added with verified locations and project details.</span>
+      <header className={styles.header}>
+        <Link className={styles.brand} href="/">TERRANOVA <span>LANDSCAPING</span></Link>
+        <nav><a href="#services">Services</a><a href="#work">Our Work</a><a href="#process">Process</a></nav>
+        <a className={styles.call} href="tel:+17758707224">Call 775-870-7224</a>
+      </header>
+
+      <section className={styles.hero}>
+        <Image src="/images/imgs/IMG_0273.PNG" alt="TerraNova Landscaping completed outdoor project" fill priority sizes="100vw" className={styles.heroImage} />
+        <div className={styles.heroShade} />
+        <div className={styles.heroContent}>
+          <p className={styles.kicker}>LANDSCAPING · RENO, NEVADA</p>
+          <h1>Landscaping in Reno, NV</h1>
+          <p className={styles.heroCopy}>Custom backyard design, hardscaping, and landscape construction—planned around your property from the start.</p>
+          <div className={styles.heroActions}>
+            <Link className={styles.primaryButton} href="/#contact">Get a Free Estimate <span>↗</span></Link>
+            <a className={styles.ghostButton} href="tel:+17758707224">Call 775-870-7224</a>
+          </div>
         </div>
-        <div className={styles.grid}>
-          {photos.map((photo, index) => (
-            <figure key={photo.src}>
-              <Image src={photo.src} alt={photo.alt} width={1200} height={900} sizes="(max-width: 760px) 100vw, 33vw" />
-              <figcaption>TerraNova project {String(index + 1).padStart(2, '0')}</figcaption>
-            </figure>
-          ))}
+        <div className={styles.trustBar}><span>15+ Years Experience</span><span>Free Estimates</span><span>2D / 3D Design</span></div>
+      </section>
+
+      <section className={`${styles.section} ${styles.problem}`}>
+        <div className={styles.problemImage}><Image src="/images/imgs/IMG_0272.PNG" alt="TerraNova backyard landscaping project" fill sizes="(max-width: 800px) 100vw, 50vw" /></div>
+        <div className={styles.problemCopy}>
+          <p className={styles.eyebrow}>FROM DIRT YARD TO FINISHED BACKYARD</p>
+          <h2>You don’t need to know exactly what to build before you call.</h2>
+          <p>Start with the property, the problems you want to solve, and how you want to use the yard. TerraNova can help organize the layout, compare materials, visualize the project, and move into construction with a clearer plan.</p>
+          <ul><li>Plan the layout around your property</li><li>Compare pavers, concrete, walls, fencing, and finishes</li><li>Use 2D or 3D design when it helps the project</li><li>Build the yard as one connected transformation</li></ul>
+          <Link className={styles.textLink} href="/#contact">Start Your Project <span>→</span></Link>
         </div>
       </section>
-    </>
+
+      <section className={`${styles.section} ${styles.services}`} id="services">
+        <div className={styles.sectionHeading}><div><p className={styles.eyebrow}>COMPLETE LANDSCAPING SERVICES</p><h2>Everything the yard needs, planned together.</h2></div><p>TerraNova can coordinate design, hardscape, concrete, walls, fencing, and landscape construction so the finished outdoor space feels intentional.</p></div>
+        <div className={styles.serviceGrid}>{services.map((service) => <Link className={styles.serviceCard} href={service.href} key={service.title}><div className={styles.servicePhoto}><Image src={service.image} alt={`${service.title} landscaping service`} fill sizes="(max-width: 760px) 100vw, 33vw" /></div><div><h3>{service.title}</h3><p>{service.text}</p><span>Explore service →</span></div></Link>)}</div>
+      </section>
+
+      <section className={styles.work} id="work">
+        <div className={`${styles.section} ${styles.workInner}`}>
+          <div className={styles.sectionHeading}><div><p className={`${styles.eyebrow} ${styles.light}`}>REAL TERRANOVA WORK</p><h2>See what a finished outdoor space can become.</h2></div><p>Real photography from TerraNova’s existing project portfolio—not stock work presented as ours.</p></div>
+          <div className={styles.gallery}>{portfolio.map((photo, i) => <figure className={i === 0 ? styles.galleryFeature : ''} key={photo.src}><Image src={photo.src} alt={photo.alt} fill sizes="(max-width: 760px) 100vw, 50vw" /><figcaption>Project {String(i + 1).padStart(2, '0')}</figcaption></figure>)}</div>
+        </div>
+      </section>
+
+      <section className={`${styles.section} ${styles.designBuild}`}>
+        <div className={styles.designCopy}><p className={styles.eyebrow}>DESIGN + BUILD</p><h2>One clear path from idea to construction.</h2><p>Many homeowners know they want a better backyard but are unsure about the layout, materials, or what is realistic for the property. TerraNova helps work through those decisions before construction begins.</p><div className={styles.fourGrid}><article><strong>01</strong><h3>Plan the layout</h3></article><article><strong>02</strong><h3>Choose materials</h3></article><article><strong>03</strong><h3>Visualize the project</h3></article><article><strong>04</strong><h3>Build the yard</h3></article></div></div>
+        <div className={styles.designImage}><Image src="/images/imgs/IMG_0294.PNG" alt="TerraNova landscape design and completed outdoor space" fill sizes="(max-width: 800px) 100vw, 45vw" /></div>
+      </section>
+
+      <section className={styles.process} id="process">
+        <div className={styles.section}>
+          <p className={`${styles.eyebrow} ${styles.light}`}>HOW IT WORKS</p><h2>From first conversation to completed outdoor space.</h2>
+          <ol><li><span>01</span><h3>Consultation</h3><p>Talk through the property, goals, and what you want to change.</p></li><li><span>02</span><h3>Planning</h3><p>Organize the layout, features, materials, and project direction.</p></li><li><span>03</span><h3>Design</h3><p>Use planning and 2D or 3D visualization when appropriate.</p></li><li><span>04</span><h3>Construction</h3><p>Build the agreed landscaping and hardscape scope.</p></li><li><span>05</span><h3>Final Walkthrough</h3><p>Review the completed work and finished outdoor space.</p></li></ol>
+        </div>
+      </section>
+
+      <section className={styles.renoFeature}>
+        <Image src="/images/imgs/IMG_0276.PNG" alt="Landscaping project suited to Northern Nevada outdoor living" fill sizes="100vw" />
+        <div className={styles.renoShade} />
+        <div className={styles.renoContent}><p className={`${styles.eyebrow} ${styles.light}`}>BUILT FOR NORTHERN NEVADA</p><h2>Landscaping that makes sense for Reno properties.</h2><p>Reno’s dry climate, seasonal temperature changes, and outdoor-living potential make material and layout decisions important from the beginning.</p><div><article><h3>Dry Climate</h3><p>Use the yard intentionally instead of treating every area the same.</p></article><article><h3>Durable Materials</h3><p>Consider appearance, exposure, maintenance, and everyday use.</p></article><article><h3>Water-Conscious Choices</h3><p>Combine usable landscape and hardscape with lower-water decisions where they fit.</p></article></div></div>
+      </section>
+
+      <section className={`${styles.section} ${styles.why}`}>
+        <div><p className={styles.eyebrow}>WHY TERRANOVA</p><h2>A clearer way to build your yard.</h2></div>
+        <div className={styles.whyGrid}><article><strong>15+</strong><h3>Years Experience</h3><p>Backed by approximately 15 years of landscaping experience.</p></article><article><strong>01</strong><h3>Custom Planning</h3><p>The property and your goals shape the plan—not a one-size-fits-all package.</p></article><article><strong>2D/3D</strong><h3>Design Options</h3><p>Visualization can help make major project decisions easier to understand.</p></article><article><strong>A→Z</strong><h3>Design + Build</h3><p>Plan connected landscape and construction elements as one project.</p></article></div>
+      </section>
+
+      <section className={`${styles.section} ${styles.areas}`}>
+        <p className={styles.eyebrow}>SERVICE AREA</p><h2>Serving Reno and nearby Northern Nevada communities.</h2><p>Exact availability depends on the property, project scope, and scheduling.</p><div><span>Reno</span><Link href="/locations/sparks">Sparks</Link><Link href="/locations/verdi">Verdi</Link><Link href="/locations/lake-tahoe">Lake Tahoe</Link><span>Washoe County</span></div>
+      </section>
+
+      <section className={`${styles.section} ${styles.faq}`}>
+        <div><p className={styles.eyebrow}>COMMON QUESTIONS</p><h2>Questions before you request an estimate.</h2></div>
+        <div className={styles.faqList}>{faqs.map(([q, a]) => <details key={q}><summary>{q}<span>+</span></summary><p>{a}</p></details>)}</div>
+      </section>
+
+      <section className={styles.finalCta}>
+        <div><p className={`${styles.eyebrow} ${styles.light}`}>READY WHEN YOU ARE</p><h2>Ready to transform your yard?</h2><p>Tell TerraNova what you want to build and we’ll help determine the next step for design and pricing.</p><div className={styles.heroActions}><Link className={styles.primaryButton} href="/#contact">Get Your Free Estimate <span>↗</span></Link><a className={styles.ghostButton} href="tel:+17758707224">Call 775-870-7224</a></div></div>
+      </section>
+
+      <footer className={styles.footer}><Link className={styles.brand} href="/">TERRANOVA <span>LANDSCAPING</span></Link><p>Professional landscaping in Reno, Sparks & Northern Nevada.</p><a href="mailto:info@terranovalandscapingnv.com">info@terranovalandscapingnv.com</a></footer>
+    </main>
   )
 }
