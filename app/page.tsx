@@ -2,6 +2,7 @@
 
 import ScrollHero from '../components/ScrollHero'
 import FloatingQuoteButton from '../components/FloatingQuoteButton'
+import ServiceAreaMap from '../components/ServiceAreaMap'
 import { getLeadAttribution, rememberQuoteOrigin, trackEvent } from '@/lib/analytics'
 import floating from './FloatingContact.module.css'
 import homeStyles from './HomeEnhancements.module.css'
@@ -31,14 +32,6 @@ const services = [
     image: '/images/imgs/IMG_0251.PNG',
     href: '/backyard-design',
   },
-]
-
-const areas = [
-  { label: 'Reno' },
-  { label: 'Sparks', href: '/locations/sparks' },
-  { label: 'Verdi', href: '/locations/verdi' },
-  { label: 'Lake Tahoe / Incline Village', href: '/locations/lake-tahoe' },
-  { label: 'Northern Nevada' },
 ]
 
 export default function Home() {
@@ -87,7 +80,7 @@ export default function Home() {
 
       <section className="split-feature section page-width"><div className="feature-photo" role="img" aria-label="TerraNova completed landscaping project" style={{ backgroundImage: "url('/images/imgs/IMG_0274.PNG')" }} /><div className="feature-copy"><p className="eyebrow">BUILT FOR NORTHERN NEVADA</p><h2>Your property deserves more than a one-size-fits-all solution.</h2><p>We take the time to understand the space, the conditions, and what you actually want from your yard. The result is a landscape that looks intentional and works for you.</p><ul className="check-list"><li>15+ years of landscaping experience</li><li>Clear communication from quote to completion</li><li>Solutions tailored to your property and goals</li></ul><a className="button button-dark" href="#contact" onClick={() => handleQuoteClick('home_feature')}>Get a Free Quote <span>↗</span></a></div></section>
 
-      <section className="areas section"><div className="page-width areas-inner"><div><p className="eyebrow light">SERVICE AREA</p><h2>Serving homeowners across Reno and surrounding communities.</h2><p className="areas-copy">TerraNova serves Reno, Sparks, Verdi, Lake Tahoe / Incline Village, and surrounding Northern Nevada communities. Exact service availability can be confirmed when you request a quote.</p></div><div className="area-list">{areas.map((area) => area.href ? <a className={homeStyles.areaLink} href={area.href} key={area.label}>{area.label}</a> : <span key={area.label}>{area.label}</span>)}</div></div></section>
+      <ServiceAreaMap />
 
       <section className="reviews section page-width" id="experience"><div className="review-intro"><p className="eyebrow">WHY CLIENTS CHOOSE TERRANOVA</p><h2 className={homeStyles.trustTitle}>15+ years of landscaping experience.</h2><p>We are leaving customer testimonials off the site until verified Google reviews are ready. For now, the focus is on the process and services TerraNova can actually stand behind.</p></div><div className={homeStyles.experienceGrid}><article className={homeStyles.experienceItem}><strong>Custom planning</strong><p>Start with your goals and build the layout around the property.</p></article><article className={homeStyles.experienceItem}><strong>Material guidance</strong><p>Compare practical options before final products are selected.</p></article><article className={homeStyles.experienceItem}><strong>Residential & commercial</strong><p>Project scope is confirmed during the quote process.</p></article><article className={homeStyles.experienceItem}><strong>Free project quote</strong><p>Share the service, budget range, timing, and project details to start.</p></article></div></section>
 
