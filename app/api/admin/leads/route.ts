@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createServerClient } from '@/lib/supabase'
 
-const allowedStatuses = new Set(['new', 'contacted', 'estimate_scheduled', 'estimate_sent', 'won', 'lost'])
+const allowedStatuses = new Set(['new', 'contacted', 'estimate_scheduled', 'estimate_sent', 'won', 'lost', 'spam'])
 
 async function getAuthorizedClient(req: NextRequest) {
   const authHeader = req.headers.get('authorization') || ''
@@ -81,5 +81,29 @@ export async function PATCH(req: NextRequest) {
   } catch (err) {
     console.error('Admin leads PATCH error:', err)
     return NextResponse.json({ error: 'Could not update lead' }, { status: 500 })
+  }
+}
+
+export async function DELETE(req: NextRequest) {
+  try {
+    const auth = await getAuthorizedClient(req)
+    if ('error' in auth) return auth.error
+
+    const body = await req.json()
+    const { id } = body
+
+    if (!id) return NextResponse.json({ error: 'Lead id is required' }, { status: 400 })
+
+    const { error } = await auth.supabase
+      .from('leads')
+      .delete()
+      .eq('id', id)
+
+    if (error) throw error
+
+    return NextResponse.json({ ok: true, id })
+  } catch (err) {
+    console.error('Admin leads DELETE error:', err)
+    return NextResponse.json({ error: 'Could not delete lead' }, { status: 500 })
   }
 }
