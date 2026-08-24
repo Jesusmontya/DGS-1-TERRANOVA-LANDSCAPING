@@ -1,11 +1,11 @@
 'use client'
 
 import { FormEvent, useEffect, useMemo, useState } from 'react'
-import { CheckCircle2, CircleDollarSign, Clock3, Flame, Globe2, LogOut, Mail, MapPin, MessageSquareText, Phone, Search, Sprout, UserRound, UsersRound, X } from 'lucide-react'
+import { CheckCircle2, CircleDollarSign, Clock3, Flame, LogOut, Mail, MapPin, MessageSquareText, Phone, Search, ShieldAlert, Sprout, Trash2, UserRound, UsersRound, X } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
 import styles from './Admin.module.css'
 
-type LeadStatus = 'new' | 'contacted' | 'estimate_scheduled' | 'estimate_sent' | 'won' | 'lost'
+type LeadStatus = 'new' | 'contacted' | 'estimate_scheduled' | 'estimate_sent' | 'won' | 'lost' | 'spam'
 type Priority = 'hot' | 'warm' | 'cold'
 
 type Lead = {
@@ -40,6 +40,7 @@ const statusOptions: { value: LeadStatus; label: string }[] = [
   { value: 'estimate_sent', label: 'Cotización enviada' },
   { value: 'won', label: 'Ganado' },
   { value: 'lost', label: 'Perdido' },
+  { value: 'spam', label: 'Spam' },
 ]
 
 const statusLabel = (status?: LeadStatus | null) => statusOptions.find((item) => item.value === (status || 'new'))?.label || 'Nuevo'
@@ -177,6 +178,29 @@ export default function AdminPage() {
     }
   }
 
+  async function deleteLead(lead: Lead) {
+    if (!sessionToken) return
+    const confirmed = window.confirm(`¿Borrar definitivamente el lead de ${lead.name}? Esta acción no se puede deshacer.`)
+    if (!confirmed) return
+
+    setSaving(true)
+    try {
+      const response = await fetch('/api/admin/leads', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${sessionToken}` },
+        body: JSON.stringify({ id: lead.id }),
+      })
+      const payload = await response.json()
+      if (!response.ok) throw new Error(payload.error || 'No se pudo borrar el lead')
+      setLeads((current) => current.filter((item) => item.id !== lead.id))
+      setSelected(null)
+    } catch (error) {
+      alert(error instanceof Error ? error.message : 'No se pudo borrar el lead')
+    } finally {
+      setSaving(false)
+    }
+  }
+
   const services = useMemo(() => Array.from(new Set(leads.map((lead) => lead.service).filter(Boolean))).sort(), [leads])
   const sources = useMemo(() => Array.from(new Set(leads.map((lead) => lead.source || 'website'))).sort(), [leads])
 
@@ -192,13 +216,14 @@ export default function AdminPage() {
   }, [leads, filter, serviceFilter, sourceFilter, query])
 
   const metrics = useMemo(() => {
-    const count = (status: LeadStatus) => leads.filter((lead) => (lead.status || 'new') === status).length
+    const activeLeads = leads.filter((lead) => lead.status !== 'spam')
+    const count = (status: LeadStatus) => activeLeads.filter((lead) => (lead.status || 'new') === status).length
     return {
       new: count('new'),
       contacted: count('contacted'),
       estimates: count('estimate_scheduled') + count('estimate_sent'),
       won: count('won'),
-      highValue: leads.filter((lead) => budgetScore(lead.budget) >= 3).length,
+      highValue: activeLeads.filter((lead) => budgetScore(lead.budget) >= 3).length,
     }
   }, [leads])
 
@@ -225,7 +250,7 @@ export default function AdminPage() {
     <main className={styles.shell}>
       <aside className={styles.sidebar}>
         <div className={styles.brand}><span>TN</span><div><strong>TerraNova</strong><small>CRM</small></div></div>
-        <nav><a className={styles.activeNav} href="#leads"><UsersRound size={18} /> Leads <span>{leads.length}</span></a></nav>
+        <nav><a className={styles.activeNav} href="#leads"><UsersRound size={18} /> Leads <span>{leads.filter((lead) => lead.status !== 'spam').length}</span></a></nav>
         <div className={styles.sidebarBottom}><div className={styles.userChip}><UserRound size={17} /><div><strong>{currentUser || 'admin'}</strong><small>Administrador</small></div></div><button onClick={() => supabase.auth.signOut()}><LogOut size={17} /> Salir</button></div>
       </aside>
 
@@ -309,6 +334,22 @@ export default function AdminPage() {
             <div className={styles.drawerSection}><label className={styles.fieldLabel}>Valor estimado del trabajo</label><div className={styles.moneyInput}><span>$</span><input type="number" min="0" step="100" value={draftValue} onChange={(e) => setDraftValue(e.target.value)} placeholder="18000" /></div></div>
             <div className={styles.drawerSection}><label className={styles.fieldLabel}>Notas</label><textarea rows={5} value={draftNotes} onChange={(e) => setDraftNotes(e.target.value)} placeholder="Presupuesto, cita, detalles importantes…" /></div>
             <button className={styles.saveButton} disabled={saving} onClick={() => updateLead(selected.id, { notes: draftNotes, estimated_value: draftValue ? Number(draftValue) : null })}>{saving ? 'Guardando…' : 'Guardar cambios'}</button>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginTop: 10 }}>
+              <button
+                type="button"
+                disabled={saving || selected.status === 'spam'}
+                onClick={() => updateLead(selected.id, { status: 'spam' })}
+                style={{ border: '1px solid #e5c47a', borderRadius: 11, background: '#fff7df', color: '#76591b', fontWeight: 800, padding: 12, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 7 }}
+              ><ShieldAlert size={16} /> {selected.status === 'spam' ? 'Marcado como spam' : 'Marcar como spam'}</button>
+              <button
+                type="button"
+                disabled={saving}
+                onClick={() => deleteLead(selected)}
+                style={{ border: '1px solid #efcaca', borderRadius: 11, background: '#fff1f1', color: '#9b3f3f', fontWeight: 800, padding: 12, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 7 }}
+              ><Trash2 size={16} /> Borrar lead</button>
+            </div>
+            <p style={{ margin: '8px 2px 0', color: '#8a948c', fontSize: 10, lineHeight: 1.5 }}>Spam se conserva para referencia y deja de contar en las métricas. Borrar elimina el lead definitivamente.</p>
 
             <div className={styles.timeline}><p className={styles.fieldLabel}>Actividad</p><div><span /><p><strong>Lead recibido</strong><small>{dateFmt.format(new Date(selected.created_at))}</small></p></div>{selected.first_contacted_at && <div><span /><p><strong>Primer contacto</strong><small>{dateFmt.format(new Date(selected.first_contacted_at))}</small></p></div>}</div>
           </aside>
