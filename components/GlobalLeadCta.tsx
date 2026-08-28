@@ -22,9 +22,19 @@ export default function GlobalLeadCta() {
     rememberQuoteOrigin()
     trackEvent('click_free_quote', { placement: 'global_cta', page_path: pathname })
 
-    const target = document.querySelector<HTMLElement>('#estimate, #contact, form')
+    const form = document.querySelector<HTMLElement>('#estimate form, #contact form, form')
+    const section = document.querySelector<HTMLElement>('#estimate, #contact')
+    const target = form || section
+
     if (target) {
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      const rect = target.getBoundingClientRect()
+      const targetTop = window.scrollY + rect.top
+      const centeredTop = targetTop - Math.max(24, (window.innerHeight - rect.height) / 2)
+
+      window.scrollTo({
+        top: Math.max(0, centeredTop),
+        behavior: 'smooth',
+      })
       return
     }
 
