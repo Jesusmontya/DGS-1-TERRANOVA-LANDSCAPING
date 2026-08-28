@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import GlobalLeadCta from '@/components/GlobalLeadCta'
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -88,6 +89,7 @@ ${configLines}`,
           dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
         />
         {children}
+        <GlobalLeadCta />
       </body>
     </html>
   )
