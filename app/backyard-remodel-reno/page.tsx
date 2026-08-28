@@ -40,6 +40,12 @@ export default function BackyardRemodelRenoPage() {
     <main className={styles.page}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
 
+      <header className={styles.header}>
+        <Link href="/" className={styles.brand}><span>TN</span><strong>TERRANOVA <small>LANDSCAPING</small></strong></Link>
+        <nav><Link href="/backyard-design">Design</Link><Link href="/paver-patio-reno">Pavers</Link><Link href="/landscaping-reno-nv">Landscaping</Link></nav>
+        <a href="#estimate" className={styles.headerCta}>Free Estimate</a>
+      </header>
+
       <section className={styles.hero}>
         <div className={styles.heroOverlay} />
         <div className={styles.heroContent}>
@@ -57,8 +63,8 @@ export default function BackyardRemodelRenoPage() {
       <section className={styles.realWork}>
         <div className={styles.heading}>
           <p className={styles.eyebrow}>REAL TERRANOVA WORK</p>
-          <h2>See actual work before you see design concepts.</h2>
-          <p>These are real project photos and video from TerraNova. Design visualizations can help plan the direction, but construction quality is what matters when the project is finished.</p>
+          <h2>Real projects first. Design concepts second.</h2>
+          <p>See actual TerraNova project footage and photos before reviewing design visualizations. The goal is to show both what the team builds and how a larger project can be planned.</p>
         </div>
         <div className={styles.mediaGrid}>
           <div className={styles.videoWrap}>
@@ -68,69 +74,55 @@ export default function BackyardRemodelRenoPage() {
             <span>REAL PROJECT VIDEO</span>
           </div>
           <div className={styles.photoStack}>
-            <Image src="/images/imgs/imgs_reales/IMG_2031.PNG" alt="Completed TerraNova landscaping project" width={1400} height={1000} sizes="(max-width: 900px) 100vw, 40vw" />
-            <Image src="/images/imgs/imgs_reales/PHOTO-2026-08-26-17-37-52.jpg" alt="Real TerraNova landscaping work" width={1200} height={900} sizes="(max-width: 900px) 100vw, 40vw" />
+            <Image src="/images/imgs/imgs_reales/IMG_2031.PNG" alt="Completed TerraNova landscaping project" width={1400} height={1000} sizes="(max-width: 900px) 100vw, 38vw" />
+            <Image src="/images/imgs/imgs_reales/PHOTO-2026-08-26-17-37-52.jpg" alt="Real TerraNova landscaping work" width={1200} height={900} sizes="(max-width: 900px) 100vw, 38vw" />
           </div>
         </div>
       </section>
 
       <section className={styles.qualifier}>
-        <div>
-          <p className={styles.eyebrow}>BUILT FOR LARGER PROJECTS</p>
-          <h2>Best fit for homeowners planning a serious backyard transformation.</h2>
-        </div>
-        <p>If you are looking to rebuild a large part of the yard, combine multiple services, or start from a blank outdoor space, TerraNova can help define the scope before construction begins.</p>
+        <div><p className={styles.eyebrow}>BUILT FOR LARGER PROJECTS</p><h2>One contractor for a serious backyard transformation.</h2></div>
+        <p>If you are rebuilding a large part of the yard, combining several services, or starting from a blank space, TerraNova can help define the layout, materials, scope, and estimate before construction begins.</p>
       </section>
 
       <section className={styles.section}>
-        <div className={styles.heading}>
-          <p className={styles.eyebrow}>DESIGN + BUILD</p>
-          <h2>One plan for the entire backyard.</h2>
-          <p>High-value landscape projects work better when the layout, grading, walls, hardscape, utilities, and finish materials are planned together.</p>
-        </div>
-        <div className={styles.scopeGrid}>
-          {scope.map(([title, text]) => <article key={title}><h3>{title}</h3><p>{text}</p></article>)}
-        </div>
+        <div className={styles.heading}><p className={styles.eyebrow}>DESIGN + BUILD</p><h2>One plan for the entire backyard.</h2><p>High-value landscape projects work better when layout, hardscape, walls, concrete, utilities, and finish materials are planned together.</p></div>
+        <div className={styles.scopeGrid}>{scope.map(([title, text]) => <article key={title}><h3>{title}</h3><p>{text}</p></article>)}</div>
       </section>
 
       <section className={styles.dark}>
         <div className={styles.darkInner}>
-          <p className={styles.eyebrow}>HOW A COMPLETE PROJECT MOVES</p>
-          <h2>From blank yard to buildable scope.</h2>
+          <p className={styles.eyebrow}>HOW THE PROJECT MOVES</p>
+          <h2>From property review to completed build.</h2>
           <div className={styles.process}>
-            <article><span>01</span><h3>Property review</h3><p>Understand the yard, access, grade, existing conditions, and what needs to change.</p></article>
-            <article><span>02</span><h3>Priorities</h3><p>Define the must-have features, how the space will be used, and the approximate budget range.</p></article>
-            <article><span>03</span><h3>Design direction</h3><p>Organize the layout and material direction before locking the construction scope.</p></article>
-            <article><span>04</span><h3>Estimate</h3><p>Price the actual project based on site conditions, quantities, materials, and construction requirements.</p></article>
-            <article><span>05</span><h3>Build</h3><p>Complete the work in the right sequence so the finished yard feels coordinated.</p></article>
+            <article><span>01</span><h3>Review the property</h3><p>Understand access, grade, existing conditions, goals, and what needs to change.</p></article>
+            <article><span>02</span><h3>Plan the direction</h3><p>Define priorities, layout, materials, and the approximate investment range.</p></article>
+            <article><span>03</span><h3>Estimate the scope</h3><p>Price the project based on quantities, site conditions, materials, and construction requirements.</p></article>
+            <article><span>04</span><h3>Build the project</h3><p>Complete the work in the right sequence so every part of the yard works together.</p></article>
           </div>
         </div>
       </section>
 
       <section className={styles.section}>
-        <div className={styles.heading}>
-          <p className={styles.eyebrow}>PROJECT BUDGET</p>
-          <h2>What drives the cost of a complete backyard remodel?</h2>
-          <p>Large landscape projects vary significantly. The biggest cost drivers are usually site preparation, square footage, material choices, access, walls and elevation changes, and the number of systems being built together.</p>
-        </div>
+        <div className={styles.heading}><p className={styles.eyebrow}>PROJECT BUDGET</p><h2>What drives the cost of a complete backyard remodel?</h2><p>Large landscape projects vary significantly. The biggest cost drivers are usually site preparation, square footage, material choices, access, walls and elevation changes, and the number of systems being built together.</p></div>
         <div className={styles.costGrid}>
-          <article><strong>Site prep</strong><p>Demolition, excavation, haul-off, grading, drainage, and difficult access can change labor significantly.</p></article>
-          <article><strong>Hardscape quantity</strong><p>Paver square footage, concrete, walls, steps, borders, and masonry increase material and installation scope.</p></article>
-          <article><strong>Connected features</strong><p>Turf, irrigation, fencing, planting, lighting preparation, and other coordinated work add project phases.</p></article>
-          <article><strong>Finish level</strong><p>Material selections, patterns, stone, decorative details, and custom design choices affect the final investment.</p></article>
+          <article><strong>Site prep</strong><p>Demolition, excavation, haul-off, grading, drainage, and access can materially change labor.</p></article>
+          <article><strong>Hardscape quantity</strong><p>Paver square footage, concrete, walls, steps, borders, and masonry increase installation scope.</p></article>
+          <article><strong>Connected features</strong><p>Turf, irrigation, fencing, planting, and other coordinated work add project phases.</p></article>
+          <article><strong>Finish level</strong><p>Material selections, patterns, stone, decorative details, and custom choices affect final investment.</p></article>
         </div>
       </section>
 
-      <section className={styles.designBand}>
+      <section className={styles.designSection}>
         <div className={styles.designCopy}>
           <p className={styles.eyebrow}>DESIGN VISUALIZATION</p>
           <h2>See the direction before construction starts.</h2>
-          <p>For larger projects, design tools can help make the layout and material direction easier to understand before the build is finalized.</p>
+          <p>For larger projects, design tools can make the layout and material direction easier to understand before the final construction scope is locked.</p>
           <Link href="/backyard-design">Explore Backyard Design →</Link>
         </div>
-        <div className={styles.designImages}>
-          <Image src="/images/imgs/IMG_0272.PNG" alt="TerraNova backyard design visualization" width={1200} height={900} />
-          <Image src="/images/imgs/IMG_0273.PNG" alt="TerraNova landscape design visualization" width={1200} height={900} />
+        <div className={styles.designCards}>
+          <figure><Image src="/images/imgs/IMG_0272.PNG" alt="TerraNova backyard design visualization" width={1200} height={900} /><figcaption>DESIGN CONCEPT</figcaption></figure>
+          <figure><Image src="/images/imgs/IMG_0273.PNG" alt="TerraNova landscape design visualization" width={1200} height={900} /><figcaption>DESIGN CONCEPT</figcaption></figure>
         </div>
       </section>
 
@@ -145,11 +137,13 @@ export default function BackyardRemodelRenoPage() {
       </section>
 
       <section className={styles.related}>
-        <Link href="/paver-patio-reno">Pavers & Hardscape</Link>
-        <Link href="/landscaping-reno-nv">Landscaping Reno</Link>
-        <Link href="/backyard-design">Backyard Design</Link>
-        <Link href="/locations/sparks">Landscaping Sparks</Link>
+        <Link href="/paver-patio-reno">Pavers & Hardscape</Link><Link href="/landscaping-reno-nv">Landscaping Reno</Link><Link href="/backyard-design">Backyard Design</Link><Link href="/locations/sparks">Landscaping Sparks</Link>
       </section>
+
+      <footer className={styles.footer}>
+        <div><strong>TERRANOVA LANDSCAPING</strong><p>Complete landscape design and construction in Reno, Sparks & Northern Nevada.</p></div>
+        <div><a href="tel:+17758707224">775-870-7224</a><a href="mailto:info@terranovalandscapingnv.com">info@terranovalandscapingnv.com</a></div>
+      </footer>
     </main>
   )
 }
