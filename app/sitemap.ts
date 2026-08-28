@@ -5,6 +5,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const routes = [
     '',
     '/landscaping-reno-nv',
+    '/backyard-remodel-reno',
     '/backyard-design',
     '/paver-patio-reno',
     '/xeriscaping-reno',
@@ -17,6 +18,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     url: `${base}${route}`,
     lastModified: new Date(),
     changeFrequency: route === '' ? 'weekly' : 'monthly',
-    priority: route === '' ? 1 : route === '/landscaping-reno-nv' ? 0.9 : 0.8,
+    priority: route === '' ? 1 : route === '/backyard-remodel-reno' ? 0.95 : route === '/landscaping-reno-nv' ? 0.9 : 0.8,
   }))
 }
