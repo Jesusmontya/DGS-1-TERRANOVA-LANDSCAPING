@@ -60,6 +60,38 @@ export default function Home() {
       <ScrollHero />
       <FloatingQuoteButton />
 
+      <section className={homeStyles.realWork} id="work">
+        <div className="page-width">
+          <div className={homeStyles.realWorkHeading}>
+            <div>
+              <p className="eyebrow">REAL TERRANOVA WORK</p>
+              <h2>Built projects. Real properties. Real work by our team.</h2>
+            </div>
+            <p>Before we show design concepts, see actual TerraNova work. These photos and videos are from real projects completed by the team.</p>
+          </div>
+          <div className={homeStyles.realMediaGrid}>
+            <article className={homeStyles.videoCard}>
+              <video autoPlay muted loop playsInline preload="metadata" aria-label="Real TerraNova landscaping project video">
+                <source src="/images/imgs/videos_reales/IMG_3041.mp4" type="video/mp4" />
+              </video>
+              <div className={homeStyles.mediaBadge}>REAL PROJECT VIDEO</div>
+            </article>
+            <div className={homeStyles.realPhotoStack}>
+              <article className={homeStyles.realPhotoLarge} style={{ backgroundImage: "url('/images/imgs/imgs_reales/IMG_2031.PNG')" }}>
+                <div className={homeStyles.mediaBadge}>COMPLETED PROJECT</div>
+              </article>
+              <article className={homeStyles.realPhotoSmall} style={{ backgroundImage: "url('/images/imgs/imgs_reales/PHOTO-2026-08-26-17-37-52.jpg')" }}>
+                <div className={homeStyles.mediaBadge}>REAL TERRANOVA WORK</div>
+              </article>
+            </div>
+          </div>
+          <div className={homeStyles.realWorkFooter}>
+            <p>Have a yard you want to transform?</p>
+            <a className="button button-dark" href="#contact" onClick={() => handleQuoteClick('home_real_work')}>Get a Free Quote <span>↗</span></a>
+          </div>
+        </div>
+      </section>
+
       <section className="intro section page-width" id="about">
         <div><p className="eyebrow">WHY TERRANOVA</p><h2>Design and build your backyard from zero—with a clear plan before construction starts.</h2></div>
         <div className="intro-copy"><p>With 15+ years of experience, TerraNova helps homeowners turn outdoor spaces into complete landscape projects. You do not need to arrive knowing the layout or exact materials—we help work through those decisions with you.</p><a className="text-link" href="#contact" onClick={() => handleQuoteClick('home_about')}>Get a Free Quote <span>→</span></a></div>
@@ -67,18 +99,18 @@ export default function Home() {
 
       <section className="services section" id="services"><div className="page-width">
         <div className="section-heading"><div><p className="eyebrow">WHAT WE DO</p><h2>Backyard design and landscape construction for Reno-area homes.</h2></div><p>Start with the problem you want to solve. Explore the service, understand the options, then request a free quote when you are ready.</p></div>
-        <div className="service-grid">{services.map((service, index) => <article className="service-card" key={service.title}><div className="service-image" role="img" aria-label={`${service.title} by TerraNova Landscaping`} style={{ backgroundImage: `url(${service.image})` }}><span>0{index + 1}</span></div><div className="service-body"><h3>{service.title}</h3><p>{service.text}</p><a className={homeStyles.serviceExplore} href={service.href}>Learn More <span>→</span></a></div></article>)}</div>
+        <div className="service-grid">{services.map((service, index) => <article className="service-card" key={service.title}><div className="service-image" role="img" aria-label={`${service.title} design visualization by TerraNova Landscaping`} style={{ backgroundImage: `url(${service.image})` }}><span>0{index + 1}</span><div className={homeStyles.renderLabel}>DESIGN VISUALIZATION</div></div><div className="service-body"><h3>{service.title}</h3><p>{service.text}</p><a className={homeStyles.serviceExplore} href={service.href}>Learn More <span>→</span></a></div></article>)}</div>
       </div></section>
 
-      <section className="before-after section page-width" id="work">
-        <div className="section-heading compact-heading"><div><p className="eyebrow">OUR WORK</p><h2>See the difference professional landscaping can make.</h2></div><p>Real TerraNova project photos from the company&apos;s uploaded portfolio.</p></div>
+      <section className={homeStyles.designIntro + ' section page-width'}>
+        <div className="section-heading compact-heading"><div><p className="eyebrow">DESIGN + VISUALIZATION</p><h2>See the direction before construction begins.</h2></div><p>The images below are design visualizations used to help homeowners understand layout, materials, and possibilities before a final construction plan is built.</p></div>
         <div className="comparison-grid">
-          <article className="comparison-card"><div className="comparison-image before-image" role="img" aria-label="TerraNova landscaping project photo" style={{ backgroundImage: "url('/images/imgs/IMG_0272.PNG')" }} /><div className="comparison-label"><span>01</span> PROJECT</div></article>
-          <article className="comparison-card"><div className="comparison-image after-image" role="img" aria-label="TerraNova landscaping project photo" style={{ backgroundImage: "url('/images/imgs/IMG_0273.PNG')" }} /><div className="comparison-label"><span>02</span> PROJECT</div></article>
+          <article className="comparison-card"><div className="comparison-image before-image" role="img" aria-label="TerraNova landscape design visualization" style={{ backgroundImage: "url('/images/imgs/IMG_0272.PNG')" }} /><div className="comparison-label"><span>01</span> DESIGN CONCEPT</div></article>
+          <article className="comparison-card"><div className="comparison-image after-image" role="img" aria-label="TerraNova landscape design visualization" style={{ backgroundImage: "url('/images/imgs/IMG_0273.PNG')" }} /><div className="comparison-label"><span>02</span> DESIGN CONCEPT</div></article>
         </div>
       </section>
 
-      <section className="split-feature section page-width"><div className="feature-photo" role="img" aria-label="TerraNova completed landscaping project" style={{ backgroundImage: "url('/images/imgs/IMG_0274.PNG')" }} /><div className="feature-copy"><p className="eyebrow">BUILT FOR NORTHERN NEVADA</p><h2>Your property deserves more than a one-size-fits-all solution.</h2><p>We take the time to understand the space, the conditions, and what you actually want from your yard. The result is a landscape that looks intentional and works for you.</p><ul className="check-list"><li>15+ years of landscaping experience</li><li>Clear communication from quote to completion</li><li>Solutions tailored to your property and goals</li></ul><a className="button button-dark" href="#contact" onClick={() => handleQuoteClick('home_feature')}>Get a Free Quote <span>↗</span></a></div></section>
+      <section className="split-feature section page-width"><div className="feature-photo" role="img" aria-label="Real TerraNova completed landscaping project" style={{ backgroundImage: "url('/images/imgs/imgs_reales/IMG_2031.PNG')" }} /><div className="feature-copy"><p className="eyebrow">BUILT FOR NORTHERN NEVADA</p><h2>Your property deserves more than a one-size-fits-all solution.</h2><p>We take the time to understand the space, the conditions, and what you actually want from your yard. The result is a landscape that looks intentional and works for you.</p><ul className="check-list"><li>15+ years of landscaping experience</li><li>Clear communication from quote to completion</li><li>Solutions tailored to your property and goals</li></ul><a className="button button-dark" href="#contact" onClick={() => handleQuoteClick('home_feature')}>Get a Free Quote <span>↗</span></a></div></section>
 
       <ServiceAreaMap />
 
