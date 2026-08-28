@@ -60,7 +60,7 @@ const localBusinessSchema = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim() || 'G-LNP5MPYRXX'
-  const adsId = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID?.trim()
+  const adsId = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID?.trim() || 'AW-18409055812'
   const loaderId = gaId || adsId
   const configLines = [
     gaId ? `gtag('config', '${gaId}', { send_page_view: true });` : '',
