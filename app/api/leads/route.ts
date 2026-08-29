@@ -28,10 +28,40 @@ function isRateLimited(ip: string) {
   return existing.count > RATE_LIMIT_MAX
 }
 
+function isLikelyDirectBot(req: NextRequest) {
+  const origin = req.headers.get('origin')
+  const host = req.headers.get('host')
+  const fetchSite = req.headers.get('sec-fetch-site')
+  const userAgent = req.headers.get('user-agent')
+
+  // Normal submissions come from fetch() running on our own website.
+  // Generic scripts commonly omit all of these browser headers.
+  if (!origin && !fetchSite && !userAgent) return true
+
+  if (origin && host) {
+    try {
+      const originHost = new URL(origin).host
+      if (originHost !== host) return true
+    } catch {
+      return true
+    }
+  }
+
+  if (fetchSite && fetchSite !== 'same-origin' && fetchSite !== 'same-site') {
+    return true
+  }
+
+  return false
+}
+
 function looksAutomated(body: Record<string, unknown>) {
+  // Honeypot support is intentionally passive. If a future form sends this
+  // hidden field, humans leave it blank while basic form bots tend to fill it.
   const honeypot = String(body.company_website || '').trim()
   if (honeypot) return true
 
+  // Optional timing signal. It only applies when a form sends the timestamp,
+  // so it cannot interfere with existing forms.
   const startedAt = Number(body.form_started_at || 0)
   if (startedAt > 0 && Date.now() - startedAt < 900) return true
 
@@ -47,15 +77,21 @@ function fakeAcceptedResponse() {
 
 export async function POST(req: NextRequest) {
   try {
+    if (!req.headers.get('content-type')?.includes('application/json')) {
+      return NextResponse.json({ error: 'Unsupported request' }, { status: 415 })
+    }
+
     const body = await req.json()
     const ip = getClientIp(req)
 
-    // Quietly absorb obvious bot submissions so bots do not learn how to bypass the form.
-    if (looksAutomated(body)) {
+    // Quietly absorb obvious automated submissions so bots do not learn how
+    // to bypass the protection. Real visitors still see the normal form flow.
+    if (isLikelyDirectBot(req) || looksAutomated(body)) {
       return fakeAcceptedResponse()
     }
 
-    // This limit is intentionally generous so normal customers are not blocked.
+    // Deliberately generous: a real customer can retry several times without
+    // being blocked, while repeated automated posts from one IP are throttled.
     if (isRateLimited(ip)) {
       return NextResponse.json(
         { error: 'Too many submissions. Please wait a few minutes or call us.' },
