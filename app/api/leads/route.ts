@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createServerClient } from '@/lib/supabase'
-import { sendLeadWhatsApp } from '@/lib/whatsapp'
+import { sendLeadEmail } from '@/lib/email'
 import type { Lead } from '@/types'
 
 export async function POST(req: NextRequest) {
@@ -59,23 +59,23 @@ export async function POST(req: NextRequest) {
 
     if (error) throw error
 
-    let whatsappSent = true
+    let emailSent = true
 
     try {
-      await sendLeadWhatsApp(lead)
-    } catch (whatsappError) {
-      whatsappSent = false
-      console.error('WhatsApp notification failed:', whatsappError)
+      await sendLeadEmail(lead)
+    } catch (emailError) {
+      emailSent = false
+      console.error('Lead email notification failed:', emailError)
     }
 
     return NextResponse.json(
       {
         success: true,
         id: data.id,
-        whatsappSent,
-        message: whatsappSent
+        emailSent,
+        message: emailSent
           ? 'Lead created successfully'
-          : 'Lead created successfully; WhatsApp notification failed',
+          : 'Lead created successfully; email notification failed',
       },
       { status: 201 }
     )
