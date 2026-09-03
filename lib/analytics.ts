@@ -19,7 +19,7 @@ export function trackEvent(name: string, params: EventParams = {}) {
   window.dataLayer.push({ event: name, ...params })
   window.gtag?.('event', name, params)
 
-  if (name === 'generate_lead') {
+  if (name === 'generate_lead' && params.conversion_eligible === true) {
     const sendTo = process.env.NEXT_PUBLIC_GOOGLE_ADS_LEAD_SEND_TO
     if (sendTo) {
       window.gtag?.('event', 'conversion', {

@@ -2,9 +2,11 @@
 
 import { FormEvent } from 'react'
 import { getLeadAttribution, rememberQuoteOrigin, trackEvent } from '@/lib/analytics'
+import { useLeadFormSecurity } from '@/lib/leadFormSecurity'
 import styles from './page.module.css'
 
 export default function LeadForm() {
+  const { startedAt } = useLeadFormSecurity()
   const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const form = e.currentTarget
@@ -26,12 +28,15 @@ export default function LeadForm() {
         budget,
         timeline,
         message: fd.get('message'),
+        company_website: fd.get('company_website'),
+        form_started_at: fd.get('form_started_at'),
         ...attribution,
       }),
     })
 
+    const result = await res.json().catch(() => null)
     if (res.ok) {
-      trackEvent('generate_lead', { service, budget, timeline, page_path: attribution.landing_page })
+      trackEvent('generate_lead', { service, budget, timeline, page_path: attribution.landing_page, conversion_eligible: result?.conversionEligible === true })
       form.reset()
       window.setTimeout(() => window.location.assign('/thank-you'), 150)
     } else {
@@ -47,6 +52,8 @@ export default function LeadForm() {
         <span>Best fit for complete landscape projects, major hardscape, retaining walls, and larger outdoor transformations.</span>
       </div>
       <div className={styles.fields}>
+        <input name="company_website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="honeypot" />
+        <input type="hidden" name="form_started_at" value={startedAt} />
         <label>Name<input name="name" placeholder="Your name" required /></label>
         <label>Phone<input name="phone" type="tel" placeholder="(775) 000-0000" required /></label>
         <label>Email<input name="email" type="email" placeholder="you@example.com" /></label>

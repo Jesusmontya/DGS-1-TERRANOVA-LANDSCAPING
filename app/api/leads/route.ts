@@ -5,6 +5,8 @@ import type { Lead } from '@/types'
 
 const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000
 const RATE_LIMIT_MAX = 8
+const MIN_FORM_COMPLETION_MS = 2_500
+const DUPLICATE_WINDOW_MS = 24 * 60 * 60 * 1000
 const rateLimitStore = new Map<string, { count: number; resetAt: number }>()
 
 function getClientIp(req: NextRequest) {
@@ -55,24 +57,40 @@ function isLikelyDirectBot(req: NextRequest) {
 }
 
 function looksAutomated(body: Record<string, unknown>) {
-  // Honeypot support is intentionally passive. If a future form sends this
-  // hidden field, humans leave it blank while basic form bots tend to fill it.
   const honeypot = String(body.company_website || '').trim()
   if (honeypot) return true
 
-  // Optional timing signal. It only applies when a form sends the timestamp,
-  // so it cannot interfere with existing forms.
   const startedAt = Number(body.form_started_at || 0)
-  if (startedAt > 0 && Date.now() - startedAt < 900) return true
+  if (!startedAt || Date.now() - startedAt < MIN_FORM_COMPLETION_MS) return true
 
   return false
 }
 
-function fakeAcceptedResponse() {
-  return NextResponse.json(
-    { success: true, id: null, emailSent: false, message: 'Lead created successfully' },
-    { status: 201 }
-  )
+function normalizeText(value: unknown, maxLength: number) {
+  return String(value ?? '').trim().slice(0, maxLength)
+}
+
+function isValidPhone(value: string) {
+  const digits = value.replace(/\D/g, '')
+  return digits.length >= 10 && digits.length <= 15
+}
+
+function isValidEmail(value: string) {
+  return !value || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
+}
+
+async function isRecentDuplicate(phone: string) {
+  const supabase = createServerClient()
+  const since = new Date(Date.now() - DUPLICATE_WINDOW_MS).toISOString()
+  const { data, error } = await supabase
+    .from('leads')
+    .select('id')
+    .eq('phone', phone)
+    .gte('created_at', since)
+    .limit(1)
+
+  if (error) throw error
+  return Boolean(data?.length)
 }
 
 export async function POST(req: NextRequest) {
@@ -81,13 +99,17 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Unsupported request' }, { status: 415 })
     }
 
-    const body = await req.json()
+    const rawBody = await req.json()
+    if (!rawBody || typeof rawBody !== 'object' || Array.isArray(rawBody)) {
+      return NextResponse.json({ error: 'Invalid request' }, { status: 400 })
+    }
+    const body = rawBody as Record<string, unknown>
     const ip = getClientIp(req)
 
     // Quietly absorb obvious automated submissions so bots do not learn how
     // to bypass the protection. Real visitors still see the normal form flow.
     if (isLikelyDirectBot(req) || looksAutomated(body)) {
-      return fakeAcceptedResponse()
+      return NextResponse.json({ success: true, accepted: false, conversionEligible: false }, { status: 201 })
     }
 
     // Deliberately generous: a real customer can retry several times without
@@ -99,24 +121,22 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    const {
-      name,
-      phone,
-      email,
-      city,
-      service,
-      message,
-      budget,
-      timeline,
-      landing_page,
-      referrer,
-      utm_source,
-      utm_medium,
-      utm_campaign,
-      gclid,
-    } = body
+    const name = normalizeText(body.name, 100)
+    const phone = normalizeText(body.phone, 30)
+    const email = normalizeText(body.email, 160).toLowerCase()
+    const city = normalizeText(body.city, 120)
+    const service = normalizeText(body.service, 120)
+    const message = normalizeText(body.message, 2_000)
+    const budget = normalizeText(body.budget, 80)
+    const timeline = normalizeText(body.timeline, 80)
+    const landing_page = normalizeText(body.landing_page, 300)
+    const referrer = normalizeText(body.referrer, 500)
+    const utm_source = normalizeText(body.utm_source, 160)
+    const utm_medium = normalizeText(body.utm_medium, 160)
+    const utm_campaign = normalizeText(body.utm_campaign, 160)
+    const gclid = normalizeText(body.gclid, 300)
 
-    if (!name || !phone || !city || !service) {
+    if (!name || !phone || !city || !service || !isValidPhone(phone) || !isValidEmail(email)) {
       return NextResponse.json({ error: 'Faltan campos requeridos' }, { status: 400 })
     }
 
@@ -143,6 +163,10 @@ export async function POST(req: NextRequest) {
       source,
     }
 
+    if (await isRecentDuplicate(phone)) {
+      return NextResponse.json({ success: true, accepted: false, duplicate: true, conversionEligible: false }, { status: 201 })
+    }
+
     const supabase = createServerClient()
     const { data, error } = await supabase
       .from('leads')
@@ -164,6 +188,8 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(
       {
         success: true,
+        accepted: true,
+        conversionEligible: Boolean(email && message.length >= 12 && budget && timeline),
         id: data.id,
         emailSent,
         message: emailSent

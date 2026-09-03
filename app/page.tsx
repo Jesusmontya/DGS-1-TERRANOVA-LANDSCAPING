@@ -4,6 +4,7 @@ import ScrollHero from '../components/ScrollHero'
 import FloatingQuoteButton from '../components/FloatingQuoteButton'
 import ServiceAreaMap from '../components/ServiceAreaMap'
 import { getLeadAttribution, rememberQuoteOrigin, trackEvent } from '@/lib/analytics'
+import { useLeadFormSecurity } from '@/lib/leadFormSecurity'
 import floating from './FloatingContact.module.css'
 import homeStyles from './HomeEnhancements.module.css'
 
@@ -35,6 +36,7 @@ const services = [
 ]
 
 export default function Home() {
+  const { startedAt } = useLeadFormSecurity()
   const handleQuoteClick = (placement: string) => {
     rememberQuoteOrigin()
     trackEvent('click_free_quote', { placement, page_path: window.location.pathname })
@@ -136,17 +138,22 @@ export default function Home() {
             budget,
             timeline,
             message: fd.get('message'),
+            company_website: fd.get('company_website'),
+            form_started_at: fd.get('form_started_at'),
             ...attribution,
           }),
         })
+        const result = await res.json().catch(() => null)
         if (res.ok) {
-          trackEvent('generate_lead', { service, budget, timeline, page_path: attribution.landing_page })
+          trackEvent('generate_lead', { service, budget, timeline, page_path: attribution.landing_page, conversion_eligible: result?.conversionEligible === true })
           form.reset()
           window.setTimeout(() => window.location.assign('/thank-you'), 150)
         } else {
           alert('We could not submit the form. Please call 775-870-7224.')
         }
       }}>
+        <input name="company_website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="honeypot" />
+        <input type="hidden" name="form_started_at" value={startedAt} />
         <label>Name<input name="name" placeholder="Your name" required /></label>
         <label>Phone<input name="phone" type="tel" placeholder="(775) 000-0000" required /></label>
         <label>Email<input name="email" type="email" placeholder="you@example.com" /></label>
