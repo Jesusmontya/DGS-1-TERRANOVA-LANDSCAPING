@@ -148,10 +148,10 @@ export async function POST(req: NextRequest) {
     const lead: Lead = {
       name,
       phone,
-      email: email || null,
+      email: email || undefined,
       city,
       service,
-      message: message || null,
+      message: message || undefined,
       budget: budget || null,
       timeline: timeline || null,
       landing_page: landing_page || null,
