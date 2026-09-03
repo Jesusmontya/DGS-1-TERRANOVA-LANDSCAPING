@@ -4,11 +4,11 @@ import { useState } from 'react'
 import { Menu, X } from 'lucide-react'
 
 const links = [
-  { href: '/services',  label: 'Services'      },
-  { href: '/areas',     label: 'Service Areas'  },
-  { href: '/gallery',   label: 'Gallery'        },
-  { href: '/reviews',   label: 'Reviews'        },
-  { href: '/contact',   label: 'Contact'        },
+  { href: '/#services',     label: 'Services'      },
+  { href: '/#service-area', label: 'Service Areas' },
+  { href: '/#work',         label: 'Gallery'       },
+  { href: '/#experience',   label: 'Reviews'       },
+  { href: '/#contact',      label: 'Contact'       },
 ]
 
 const PHONE = process.env.NEXT_PUBLIC_PHONE || '(775) 000-0000'
@@ -46,7 +46,7 @@ export default function Navbar() {
               {PHONE}
             </a>
             <Link
-              href="/estimate"
+              href="/#contact"
               className="bg-green-700 hover:bg-green-800 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors"
             >
               Free Estimate
@@ -72,7 +72,7 @@ export default function Navbar() {
             </Link>
           ))}
           <Link
-            href="/estimate"
+            href="/#contact"
             onClick={() => setOpen(false)}
             className="bg-green-700 text-white text-center font-semibold px-4 py-3 rounded-lg"
           >

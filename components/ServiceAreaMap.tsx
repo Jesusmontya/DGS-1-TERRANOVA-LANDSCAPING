@@ -60,7 +60,7 @@ export default function ServiceAreaMap() {
   }
 
   return (
-    <section className={styles.section} aria-labelledby="service-area-title">
+    <section className={styles.section} id="service-area" aria-labelledby="service-area-title">
       <div className={styles.inner}>
         <div className={styles.copy}>
           <p className={styles.eyebrow}>SERVICE AREA</p>

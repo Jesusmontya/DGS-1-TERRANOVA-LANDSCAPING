@@ -22,7 +22,7 @@ export default function Footer() {
           <ul className="space-y-2">
             {SERVICES.slice(0, 6).map(s => (
               <li key={s.slug}>
-                <Link href={`/services#${s.slug}`} className="text-sm hover:text-green-400 transition-colors">
+                <Link href="/#services" className="text-sm hover:text-green-400 transition-colors">
                   {s.title}
                 </Link>
               </li>
@@ -36,7 +36,7 @@ export default function Footer() {
           <ul className="space-y-2">
             {featured.map(a => (
               <li key={a.slug}>
-                <Link href={`/areas#${a.slug}`} className="text-sm hover:text-green-400 transition-colors">
+                <Link href="/#service-area" className="text-sm hover:text-green-400 transition-colors">
                   {a.city}, {a.state}
                 </Link>
               </li>
@@ -63,7 +63,7 @@ export default function Footer() {
             </li>
           </ul>
           <Link
-            href="/estimate"
+            href="/#contact"
             className="mt-6 inline-block bg-green-600 hover:bg-green-700 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors"
           >
             Get Free Estimate
