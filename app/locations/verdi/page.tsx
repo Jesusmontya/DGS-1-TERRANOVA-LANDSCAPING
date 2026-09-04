@@ -163,7 +163,7 @@ export default function VerdiPage() {
         <div className={styles.related}>
           <Link href="/landscaping-reno-nv">Landscaping Reno</Link>
           <Link href="/backyard-design">Backyard Design</Link>
-          <Link href="/paver-patio-reno">Paver Patios</Link>
+          <Link href="/pavers-reno-nv">Paver Patios</Link><Link href="/hardscape-reno">Hardscape Reno</Link>
           <Link href="/xeriscaping-reno">Xeriscaping</Link>
           <Link href="/locations/sparks">Sparks</Link>
         </div>

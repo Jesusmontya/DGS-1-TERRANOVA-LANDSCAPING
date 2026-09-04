@@ -150,7 +150,7 @@ export default function LakeTahoePage() {
         <details><summary>Can a Tahoe project include retaining walls and patios together?</summary><p>Yes, those features can be planned together when they fit the property and scope. Coordinating them early can help the layout respond better to grade and circulation.</p></details>
         <details><summary>Do I need to choose stone or pavers before contacting TerraNova?</summary><p>No. You can begin with the look and use you want. TerraNova can help narrow material categories, while exact products and availability are confirmed later.</p></details>
         <div className={styles.related}>
-          <Link href="/landscaping-reno-nv">Landscaping Reno</Link><Link href="/backyard-design">Backyard Design</Link><Link href="/paver-patio-reno">Paver Patios</Link><Link href="/xeriscaping-reno">Xeriscaping</Link>
+          <Link href="/landscaping-reno-nv">Landscaping Reno</Link><Link href="/backyard-design">Backyard Design</Link><Link href="/pavers-reno-nv">Paver Patios</Link><Link href="/hardscape-reno">Hardscape Reno</Link><Link href="/xeriscaping-reno">Xeriscaping</Link>
         </div>
       </section>
 

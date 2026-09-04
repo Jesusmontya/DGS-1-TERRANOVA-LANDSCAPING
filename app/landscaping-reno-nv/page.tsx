@@ -14,10 +14,10 @@ export const metadata: Metadata = {
 
 const services = [
   { title: 'Backyard Design', text: 'Plan the layout, materials, features, and priorities before construction starts.', image: '/images/imgs/IMG_0249.PNG', href: '/backyard-design' },
-  { title: 'Pavers', text: 'Patios, walkways, gathering areas, and hardscape zones planned around the property.', image: '/images/imgs/IMG_0252.PNG', href: '/paver-patio-reno' },
-  { title: 'Concrete', text: 'Outdoor concrete surfaces integrated into a complete landscape plan.', image: '/images/imgs/IMG_0251.PNG', href: '/paver-patio-reno' },
-  { title: 'Hardscaping', text: 'Structural outdoor features that define circulation, use, and the finished layout.', image: '/images/imgs/IMG_0271.PNG', href: '/paver-patio-reno' },
-  { title: 'Retaining Walls', text: 'Functional and visual wall systems for grade changes and defined landscape areas.', image: '/images/imgs/IMG_0274.PNG', href: '/paver-patio-reno' },
+  { title: 'Pavers', text: 'Patios, walkways, gathering areas, and hardscape zones planned around the property.', image: '/images/imgs/IMG_0252.PNG', href: '/pavers-reno-nv' },
+  { title: 'Concrete', text: 'Outdoor concrete surfaces integrated into a complete landscape plan.', image: '/images/imgs/IMG_0251.PNG', href: '/hardscape-reno' },
+  { title: 'Hardscaping', text: 'Structural outdoor features that define circulation, use, and the finished layout.', image: '/images/imgs/IMG_0271.PNG', href: '/hardscape-reno' },
+  { title: 'Retaining Walls', text: 'Functional and visual wall systems for grade changes and defined landscape areas.', image: '/images/imgs/IMG_0274.PNG', href: '/hardscape-reno' },
   { title: 'Fencing', text: 'Coordinate fencing with the overall backyard transformation when it fits the scope.', image: '/images/imgs/IMG_0275.PNG', href: '/backyard-design' },
 ]
 

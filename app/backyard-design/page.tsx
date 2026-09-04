@@ -146,7 +146,7 @@ export default function BackyardDesignPage() {
         <details><summary>Can one project include pavers, turf, irrigation, walls, fencing, and planting?</summary><p>Those elements can be planned together when they fit the property and project scope. The quote process is where the exact combination is confirmed.</p></details>
         <details><summary>Can you help me choose materials?</summary><p>Yes. Material guidance is part of the planning conversation. Exact products, colors, availability, and installation details are confirmed for the specific project.</p></details>
         <details><summary>How do I get an exact price?</summary><p>Start with the free quote form. Once TerraNova understands the property, desired features, materials, and site conditions, the team can discuss the appropriate next step for pricing.</p></details>
-        <div className={styles.related}><Link href="/landscaping-reno-nv">Landscaping Reno</Link><Link href="/paver-patio-reno">Paver Patios</Link><Link href="/xeriscaping-reno">Xeriscaping</Link><Link href="/locations/sparks">Landscaping in Sparks</Link></div>
+        <div className={styles.related}><Link href="/landscaping-reno-nv">Landscaping Reno</Link><Link href="/pavers-reno-nv">Paver Patios</Link><Link href="/hardscape-reno">Hardscape Reno</Link><Link href="/xeriscaping-reno">Xeriscaping</Link><Link href="/locations/sparks">Landscaping in Sparks</Link></div>
       </section>
 
       <section className={styles.final}>

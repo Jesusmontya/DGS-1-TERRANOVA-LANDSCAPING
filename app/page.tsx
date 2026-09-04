@@ -14,10 +14,16 @@ const services = [
     href: '/backyard-design',
   },
   {
-    title: 'Pavers & Hardscape',
+    title: 'Paver Patios',
     text: 'Patios, walkways, retaining walls, masonry, and hardscape features planned as part of the complete outdoor space.',
     image: '/images/imgs/IMG_0252.PNG',
-    href: '/paver-patio-reno',
+    href: '/pavers-reno-nv',
+  },
+  {
+    title: 'Hardscape',
+    text: 'Patios, retaining walls, pavers, and outdoor living features connected to the rest of the landscape construction.',
+    image: '/images/imgs/IMG_0252.PNG',
+    href: '/hardscape-reno',
   },
   {
     title: 'Xeriscaping & Turf',
@@ -26,10 +32,10 @@ const services = [
     href: '/xeriscaping-reno',
   },
   {
-    title: 'Landscape Construction',
+    title: 'Backyard Remodel',
     text: 'Coordinate concrete, fencing, irrigation, planting, hardscape, and finish work so the yard is built as one connected project.',
     image: '/images/imgs/IMG_0251.PNG',
-    href: '/backyard-design',
+    href: '/backyard-remodel-reno',
   },
 ]
 

@@ -6,8 +6,8 @@ import styles from './page.module.css'
 const canonical = 'https://terranovalandscapingnv.com/xeriscaping-reno'
 
 export const metadata: Metadata = {
-  title: 'Xeriscaping Reno NV | Artificial Turf & Low-Water Landscaping',
-  description: 'Xeriscaping in Reno, NV with artificial turf, decorative rock, planting, irrigation planning, pavers, and low-water landscape design.',
+  title: 'Xeriscaping Reno, NV | Low-Water Landscape Design & Estimates',
+  description: 'Xeriscaping for Reno and Sparks homes: low-water landscaping, decorative rock, drought-tolerant planting and drip irrigation planning. Request a free estimate.',
   alternates: { canonical },
 }
 
@@ -33,6 +33,17 @@ const breadcrumbSchema = {
   ],
 }
 
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Does xeriscaping mean removing every plant or green area?', acceptedAnswer: { '@type': 'Answer', text: 'No. A xeriscape can combine artificial turf, planting, rock, hardscape, and other features based on the property and how you want to use it.' } },
+    { '@type': 'Question', name: 'Can TerraNova update irrigation as part of a xeriscape project?', acceptedAnswer: { '@type': 'Answer', text: 'Irrigation can be included in landscape projects. The exact work required is confirmed after reviewing the existing property and design.' } },
+    { '@type': 'Question', name: 'Can pavers or concrete be part of xeriscaping?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Hardscape can create patios, paths, and usable zones while helping organize the lower-water parts of the landscape.' } },
+    { '@type': 'Question', name: 'How do I know whether turf or rock is better for my yard?', acceptedAnswer: { '@type': 'Answer', text: 'Start with how you want to use each area. Turf can make sense for a green usable zone, while rock and planting may fit areas where lower water use and lower routine maintenance are bigger priorities.' } },
+  ],
+}
+
 const gallery = [
   { src: '/images/imgs/IMG_0250.PNG', title: 'Artificial turf zones', text: 'Keep green space where it adds function and visual contrast.' },
   { src: '/images/imgs/IMG_0274.PNG', title: 'Rock & planting', text: 'Use texture and planting to avoid a flat, one-material landscape.' },
@@ -46,12 +57,13 @@ export default function XeriscapingRenoPage() {
     <main className={styles.page}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
       <section className={styles.hero}>
         <div className={styles.heroInner}>
           <p className={styles.eyebrow}>XERISCAPING · RENO, NV</p>
           <h1>Low-water landscaping that still feels finished and intentional.</h1>
-          <p>TerraNova combines artificial turf, decorative rock, planting, pavers, irrigation planning, and usable outdoor areas into a xeriscape designed around your property.</p>
+          <p>TerraNova combines low-water landscaping, decorative rock and gravel, drought-tolerant planting, drip irrigation planning, pavers, and usable outdoor areas into a xeriscape designed for the Reno climate.</p>
           <div className={styles.actions}>
             <Link className={styles.primary} href="/#contact">Get a Free Estimate</Link>
             <a className={styles.secondary} href="tel:+17758707224">Call 775-870-7224</a>
@@ -144,7 +156,7 @@ export default function XeriscapingRenoPage() {
           <article><h3>Artificial Turf</h3><p>A lower-water lawn-style surface for selected green and usable areas.</p></article>
           <article><h3>Decorative Gravel</h3><p>Ground cover for planting zones, transitions, and lower-maintenance areas.</p></article>
           <article><h3>River Rock</h3><p>Rounded stone for accent areas and selected drainage-style features.</p></article>
-          <article><h3>Drought-Conscious Planting</h3><p>Plant selections planned around exposure, water use, maintenance, and the property.</p></article>
+          <article><h3>Drought-Tolerant Planting</h3><p>Desert-friendly plant selections planned around exposure, water use, maintenance, and the property.</p></article>
           <article><h3>Pavers</h3><p>Useful for patios and paths inside a low-water landscape design.</p></article>
           <article><h3>Boulders / Accent Stone</h3><p>Larger natural-stone accents that add structure and contrast.</p></article>
         </div>
@@ -157,7 +169,7 @@ export default function XeriscapingRenoPage() {
         <details><summary>Can pavers or concrete be part of xeriscaping?</summary><p>Yes. Hardscape can create patios, paths, and usable zones while helping organize the lower-water parts of the landscape.</p></details>
         <details><summary>How do I know whether turf or rock is better for my yard?</summary><p>Start with how you want to use each area. Turf can make sense for a green usable zone, while rock and planting may fit areas where lower water use and lower routine maintenance are bigger priorities.</p></details>
         <div className={styles.related}>
-          <Link href="/landscaping-reno-nv">Landscaping Reno</Link><Link href="/backyard-design">Backyard Design</Link><Link href="/paver-patio-reno">Paver Patios</Link><Link href="/locations/sparks">Sparks</Link>
+          <Link href="/landscaping-reno-nv">Landscaping Reno</Link><Link href="/backyard-design">Landscape Design</Link><Link href="/pavers-reno-nv">Paver Contractors</Link><Link href="/hardscape-reno">Hardscape Reno</Link><Link href="/locations/sparks">Sparks</Link>
         </div>
       </section>
 

@@ -168,7 +168,7 @@ export default function SparksPage() {
         <div className={styles.related}>
           <Link href="/landscaping-reno-nv">Landscaping Reno</Link>
           <Link href="/backyard-design">Backyard Design</Link>
-          <Link href="/paver-patio-reno">Paver Patios</Link>
+          <Link href="/pavers-reno-nv">Paver Patios</Link><Link href="/hardscape-reno">Hardscape Reno</Link>
           <Link href="/xeriscaping-reno">Xeriscaping</Link>
           <Link href="/locations/verdi">Landscaping Verdi</Link>
           <Link href="/locations/lake-tahoe">Lake Tahoe</Link>

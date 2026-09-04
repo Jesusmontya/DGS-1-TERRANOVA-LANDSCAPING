@@ -7,7 +7,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/landscaping-reno-nv',
     '/backyard-remodel-reno',
     '/backyard-design',
-    '/paver-patio-reno',
+    '/pavers-reno-nv',
+    '/hardscape-reno',
     '/xeriscaping-reno',
     '/locations/sparks',
     '/locations/verdi',
@@ -18,6 +19,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     url: `${base}${route}`,
     lastModified: new Date(),
     changeFrequency: route === '' ? 'weekly' : 'monthly',
-    priority: route === '' ? 1 : route === '/backyard-remodel-reno' ? 0.95 : route === '/landscaping-reno-nv' ? 0.9 : 0.8,
+    priority: route === '' ? 1 : route === '/pavers-reno-nv' ? 0.95 : route === '/hardscape-reno' || route === '/xeriscaping-reno' ? 0.9 : route === '/backyard-remodel-reno' ? 0.85 : 0.8,
   }))
 }

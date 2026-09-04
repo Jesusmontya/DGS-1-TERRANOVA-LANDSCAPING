@@ -42,7 +42,7 @@ export default function BackyardRemodelRenoPage() {
 
       <header className={styles.header}>
         <Link href="/" className={styles.brand}><span>TN</span><strong>TERRANOVA <small>LANDSCAPING</small></strong></Link>
-        <nav><Link href="/backyard-design">Design</Link><Link href="/paver-patio-reno">Pavers</Link><Link href="/landscaping-reno-nv">Landscaping</Link></nav>
+        <nav><Link href="/backyard-design">Design</Link><Link href="/pavers-reno-nv">Pavers</Link><Link href="/hardscape-reno">Hardscape</Link><Link href="/landscaping-reno-nv">Landscaping</Link></nav>
         <a href="#estimate" className={styles.headerCta}>Free Estimate</a>
       </header>
 
@@ -137,7 +137,7 @@ export default function BackyardRemodelRenoPage() {
       </section>
 
       <section className={styles.related}>
-        <Link href="/paver-patio-reno">Pavers & Hardscape</Link><Link href="/landscaping-reno-nv">Landscaping Reno</Link><Link href="/backyard-design">Backyard Design</Link><Link href="/locations/sparks">Landscaping Sparks</Link>
+        <Link href="/pavers-reno-nv">Paver Patios</Link><Link href="/hardscape-reno">Hardscape Reno</Link><Link href="/landscaping-reno-nv">Landscaping Reno</Link><Link href="/backyard-design">Backyard Design</Link><Link href="/locations/sparks">Landscaping Sparks</Link>
       </section>
 
       <footer className={styles.footer}>
