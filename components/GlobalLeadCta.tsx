@@ -22,15 +22,14 @@ export default function GlobalLeadCta() {
     rememberQuoteOrigin()
     trackEvent('click_free_quote', { placement: 'global_cta', page_path: pathname })
 
-    const section = document.querySelector<HTMLElement>('#estimate, #contact')
-    const form = document.querySelector<HTMLElement>('#quote-form, #estimate form, #contact form, form')
-    const target = section || form
+    const target = document.querySelector<HTMLElement>('#quote-form')
 
     if (target) {
-      target.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-      })
+      const isMobile = window.innerWidth <= 768
+      const yOffset = isMobile ? -180 : -100
+      const y = target.getBoundingClientRect().top + window.scrollY + yOffset
+
+      window.scrollTo({ top: y, behavior: 'smooth' })
       return
     }
 
