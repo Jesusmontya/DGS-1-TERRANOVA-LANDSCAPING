@@ -16,6 +16,7 @@ export const metadata: Metadata = {
 
 export default function ArtificialTurfRenoPage() {
   return <CommercialServicePage
+    showSiteChrome
     canonical={canonical}
     serviceName="Artificial Turf Installation"
     eyebrow="ARTIFICIAL TURF · RENO & SPARKS, NV"

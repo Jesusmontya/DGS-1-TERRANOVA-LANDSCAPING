@@ -8,6 +8,7 @@ type Feature = { title: string; text: string }
 type PageProps = {
   canonical: string; serviceName: string; eyebrow: string; title: string; intro: string
   photoAlt: string; tags: string[]; features: Feature[]; faqs: Faq[]; related: { href: string; label: string }[]
+  showSiteChrome?: boolean
 }
 
 const realPhotos = [
@@ -15,7 +16,7 @@ const realPhotos = [
   '/images/imgs/imgs_reales/PHOTO-2026-08-26-17-37-52.jpg',
 ]
 
-export default function CommercialServicePage({ canonical, serviceName, eyebrow, title, intro, photoAlt, tags, features, faqs, related }: PageProps) {
+export default function CommercialServicePage({ canonical, serviceName, eyebrow, title, intro, photoAlt, tags, features, faqs, related, showSiteChrome = false }: PageProps) {
   const serviceSchema = {
     '@context': 'https://schema.org', '@type': 'Service', name: `${serviceName} in Reno, Nevada`, description: intro,
     url: canonical, provider: { '@id': 'https://terranovalandscapingnv.com/#business' },
@@ -28,6 +29,7 @@ export default function CommercialServicePage({ canonical, serviceName, eyebrow,
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+    {showSiteChrome && <header className={styles.header}><Link className={styles.brand} href="/">TERRANOVA <span>LANDSCAPING</span></Link><nav><Link href="/#services">Services</Link><Link href="/#work">Our Work</Link><Link href="/#contact">Contact</Link></nav><a className={styles.headerCall} href="tel:+17758707224">Call 775-870-7224</a></header>}
     <section className={styles.hero}><div className={styles.heroInner}><p className={styles.eyebrow}>{eyebrow}</p><h1>{title}</h1><p>{intro}</p><div className={styles.actions}><Link className={styles.primary} href="/#contact">Get a Free Estimate</Link><a className={styles.secondary} href="tel:+17758707224">Call 775-870-7224</a></div></div></section>
     <div className={styles.trust}><span>Reno & Sparks</span><span>Free Project Estimates</span><span>Landscape Construction</span></div>
     <section className={`${styles.section} ${styles.split}`}><div className={styles.photo} role="img" aria-label={photoAlt} /><div className={styles.copy}><p className={styles.eyebrow}>{serviceName.toUpperCase()} FOR NORTHERN NEVADA</p><h2>Plan the details around how you want to use the space.</h2><p>TerraNova can help connect the materials, layout, access, and construction steps into one outdoor project. Start with a free estimate and the goals for your property.</p><div className={styles.tags}>{tags.map((tag) => <span key={tag}>{tag}</span>)}</div><Link className={styles.primary} href="/#contact">Request Your Free Estimate</Link></div></section>
@@ -36,5 +38,6 @@ export default function CommercialServicePage({ canonical, serviceName, eyebrow,
     <section className={styles.dark}><div className={styles.darkInner}><p className={styles.eyebrow}>A CLEAR PROJECT PATH</p><h2>Start with the property, then build the right scope.</h2><div className={styles.steps}><article><span>01</span><h3>Share your goals</h3><p>Tell us what you want to improve and how you use the space.</p></article><article><span>02</span><h3>Review the layout</h3><p>Discuss surfaces, access, materials, and practical priorities.</p></article><article><span>03</span><h3>Confirm the scope</h3><p>Use the estimate to clarify the work and next steps.</p></article><article><span>04</span><h3>Build the project</h3><p>Move into landscape construction when the project is ready.</p></article></div></div></section>
     <section className={`${styles.section} ${styles.faq}`}><div className={styles.heading}><p className={styles.eyebrow}>COMMON QUESTIONS</p><h2>Questions before you request an estimate.</h2></div>{faqs.map((faq) => <details key={faq.question}><summary>{faq.question}</summary><p>{faq.answer}</p></details>)}<div className={styles.related}>{related.map((item) => <Link key={item.href} href={item.href}>{item.label}</Link>)}</div></section>
     <section className={styles.final}><div className={styles.finalInner}><p className={styles.eyebrow}>READY WHEN YOU ARE</p><h2>Tell us what you want to build.</h2><p>Send the basics about your property and the project. TerraNova can review the request and help determine the next step.</p><div className={styles.actions}><Link className={styles.primary} href="/#contact">Get Your Free Estimate</Link><a className={styles.secondary} href="tel:+17758707224">Call 775-870-7224</a></div></div></section>
+    {showSiteChrome && <footer className={styles.footer}><Link className={styles.brand} href="/">TERRANOVA <span>LANDSCAPING</span></Link><p>Professional landscaping in Reno, Sparks & Northern Nevada.</p><a href="mailto:info@terranovalandscapingnv.com">info@terranovalandscapingnv.com</a></footer>}
   </main>
 }
