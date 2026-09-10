@@ -13,6 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/artificial-turf-reno',
     '/landscape-design-reno',
     '/pavers-hardscape-reno',
+    '/fall-leaf-cleanup-reno',
     '/locations/sparks',
     '/locations/verdi',
     '/locations/lake-tahoe',
