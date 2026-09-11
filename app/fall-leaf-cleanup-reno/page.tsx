@@ -37,6 +37,8 @@ export default function FallLeafCleanupRenoPage() {
       { question: 'Can fall cleanup be combined with other landscaping work?', answer: 'Yes. Seasonal cleanup can be combined with landscape improvements when the project and schedule are a fit.' },
     ]}
     related={[
+      { href: '/leaf-removal-reno', label: 'Leaf Removal Reno' },
+      { href: '/yard-debris-removal-reno', label: 'Yard Debris Removal' },
       { href: '/landscaping-reno-nv', label: 'Landscaping Reno' },
       { href: '/xeriscaping-reno', label: 'Xeriscaping Reno' },
       { href: '/backyard-remodel-reno', label: 'Backyard Remodel' },
