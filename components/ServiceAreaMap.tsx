@@ -65,7 +65,7 @@ export default function ServiceAreaMap() {
         <div className={styles.copy}>
           <p className={styles.eyebrow}>SERVICE AREA</p>
           <h2 id="service-area-title">Proudly serving Northern Nevada.</h2>
-          <p className={styles.lead}>TerraNova generally serves properties within approximately a 1.5-hour drive from Sun Valley, including Reno, Sparks, Verdi, Washoe County, and the Lake Tahoe / Incline Village area.</p>
+          <p className={styles.lead}>TerraNova serves Reno, Sparks, Sun Valley, Verdi, and nearby Northern Nevada communities. Enter your city or ZIP code below to check whether your property is within the typical service area.</p>
           <p className={styles.note}>Availability may vary depending on project scope, property access, scheduling, and seasonal conditions.</p>
 
           <div className={styles.chips} aria-label="Primary service areas">
@@ -92,28 +92,17 @@ export default function ServiceAreaMap() {
           </div>
         </div>
 
-        <div className={styles.mapWrap} aria-label="Approximate TerraNova service area map">
-          <div className={styles.mapHeader}><span>Typical Service Area</span><strong>≈ 1.5 hr from Sun Valley</strong></div>
+        <div className={styles.mapWrap} aria-label="TerraNova service area map">
+          <div className={styles.mapHeader}><span>Typical Service Area</span><strong>Reno, Sparks & nearby Northern Nevada</strong></div>
           <div className={styles.map}>
-            <svg viewBox="0 0 760 620" role="img" aria-labelledby="service-map-title service-map-desc">
-              <title id="service-map-title">Approximate TerraNova Landscaping service area</title>
-              <desc id="service-map-desc">Stylized Northern Nevada service area centered on Sun Valley with Reno, Sparks, Verdi, Washoe County, Lake Tahoe, and Incline Village marked.</desc>
-              <path className={styles.terrain} d="M60 98C172 48 318 62 415 102c100 42 221 29 280 97 52 59 11 126 13 199 3 104-52 166-156 186-105 20-189-17-288 1-94 17-171-11-201-89-32-82 13-151 4-227-7-61-46-122-7-171Z" />
-              <path className={styles.lake} d="M145 425c20-63 64-91 102-78 37 13 42 61 18 112-25 54-69 87-103 68-33-19-35-49-17-102Z" />
-              <ellipse className={styles.radius} cx="415" cy="284" rx="260" ry="224" />
-              <path className={styles.road} d="M174 398c76-45 119-72 181-91 73-22 139-25 228-87" />
-              <path className={styles.road} d="M261 160c54 55 105 87 154 124 57 43 103 94 142 159" />
-              <g className={styles.pin}><circle cx="415" cy="284" r="11"/><circle cx="415" cy="284" r="24"/><text x="433" y="278">Sun Valley</text><text className={styles.smallLabel} x="433" y="297">service-area center</text></g>
-              <g className={styles.city}><circle cx="384" cy="323" r="7"/><text x="398" y="329">Reno</text></g>
-              <g className={styles.city}><circle cx="474" cy="306" r="7"/><text x="488" y="312">Sparks</text></g>
-              <g className={styles.city}><circle cx="276" cy="320" r="7"/><text x="224" y="310">Verdi</text></g>
-              <g className={styles.city}><circle cx="254" cy="430" r="7"/><text x="269" y="436">Incline Village</text></g>
-              <text className={styles.lakeLabel} x="156" y="451">LAKE TAHOE</text>
-              <text className={styles.countyLabel} x="479" y="170">WASHOE COUNTY</text>
-              <text className={styles.radiusLabel} x="465" y="510">APPROX. SERVICE RANGE</text>
-            </svg>
-            <div className={styles.legend}><span><i className={styles.centerDot}/>Sun Valley</span><span><i className={styles.areaDot}/>Typical coverage</span></div>
+            <iframe
+              title="Map of Reno, Sparks, and Northern Nevada"
+              src="https://www.google.com/maps?output=embed&q=Reno%2C%20Nevada&z=9"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
           </div>
+          <div className={styles.mapCaption}><strong>Typical coverage:</strong> Reno, Sparks, Sun Valley, Verdi, Spanish Springs, and nearby Northern Nevada. <span>Availability is confirmed per property and service.</span></div>
         </div>
       </div>
     </section>

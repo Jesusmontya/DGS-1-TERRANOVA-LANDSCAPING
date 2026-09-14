@@ -79,11 +79,12 @@ export default function Home() {
       <ScrollHero />
 
       {showSeasonalPrompt && <aside className={homeStyles.seasonalPrompt} role="dialog" aria-label="Seasonal property cleanup">
+        <div className={homeStyles.promptPhoto} role="img" aria-label="TerraNova seasonal yard cleanup project" style={{ backgroundImage: "url('/images/cleanyards/IMG_3001.JPG')" }} />
         <button className={homeStyles.promptClose} type="button" onClick={dismissSeasonalPrompt} aria-label="Close seasonal cleanup message">×</button>
-        <p className="eyebrow">SEASONAL PROPERTY CLEANUP</p>
-        <h2>Yard and snow cleanup for Reno & Sparks.</h2>
-        <p>TerraNova provides seasonal leaf, yard, debris, and snow cleanup in addition to landscape construction.</p>
-        <a href="/fall-leaf-cleanup-reno" onClick={() => handleQuoteClick('seasonal_popup')}>Get a Free Estimate <span>→</span></a>
+        <p className="eyebrow">SEASONAL YARD CLEANUP</p>
+        <h2>Leaf and yard cleanup for Reno & Sparks.</h2>
+        <p>TerraNova provides seasonal leaf, pine needle, and yard debris cleanup in addition to landscape construction.</p>
+        <a href="/fall-leaf-cleanup-reno" onClick={() => handleQuoteClick('seasonal_popup')}>Get a Yard Cleanup Estimate <span>→</span></a>
         <button className={homeStyles.promptDismiss} type="button" onClick={dismissSeasonalPrompt}>No thanks</button>
       </aside>}
 
