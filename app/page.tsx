@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from 'react'
+import Image from 'next/image'
 import ScrollHero from '../components/ScrollHero'
 import ServiceAreaMap from '../components/ServiceAreaMap'
 import { getLeadAttribution, rememberQuoteOrigin, trackEvent } from '@/lib/analytics'
@@ -38,6 +39,15 @@ const services = [
     image: '/images/imgs/IMG_0251.PNG',
     href: '/backyard-remodel-reno',
   },
+]
+
+const beforeAfterPhotos = [
+  '/images/before-after/IMG_3019.JPG',
+  '/images/before-after/IMG_3020.JPG',
+  '/images/before-after/IMG_3021.JPG',
+  '/images/before-after/IMG_3022.JPG',
+  '/images/before-after/IMG_3023.JPG',
+  '/images/before-after/IMG_3024.JPG',
 ]
 
 export default function Home() {
@@ -148,11 +158,13 @@ export default function Home() {
         <div className={homeStyles.seasonalFooter}><p>Need seasonal cleanup for your property?</p><a className="button button-dark" href="#contact" onClick={() => handleQuoteClick('home_seasonal_cleanup')}>Get a Free Estimate <span>↗</span></a></div>
       </div></section>
 
-      <section className={homeStyles.designIntro + ' section page-width'}>
-        <div className="section-heading compact-heading"><div><p className="eyebrow">DESIGN + VISUALIZATION</p><h2>See the direction before construction begins.</h2></div><p>The images below are design visualizations used to help homeowners understand layout, materials, and possibilities before a final construction plan is built.</p></div>
-        <div className="comparison-grid">
-          <article className="comparison-card"><div className="comparison-image before-image" role="img" aria-label="TerraNova landscape design visualization" style={{ backgroundImage: "url('/images/imgs/IMG_0272.PNG')" }} /><div className="comparison-label"><span>01</span> DESIGN CONCEPT</div></article>
-          <article className="comparison-card"><div className="comparison-image after-image" role="img" aria-label="TerraNova landscape design visualization" style={{ backgroundImage: "url('/images/imgs/IMG_0273.PNG')" }} /><div className="comparison-label"><span>02</span> DESIGN CONCEPT</div></article>
+      <section className={homeStyles.beforeAfter + ' section page-width'}>
+        <div className="section-heading compact-heading"><div><p className="eyebrow">REAL YARD TRANSFORMATIONS</p><h2>See what your yard can become.</h2></div><p>Each photo shows the starting yard at the top and the completed TerraNova result below. These are real transformations, not design renders.</p></div>
+        <div className={homeStyles.beforeAfterGrid}>
+          {beforeAfterPhotos.map((src, index) => <article className={homeStyles.beforeAfterCard} key={src}>
+            <Image src={src} width={1200} height={1788} sizes="(max-width: 760px) 100vw, (max-width: 1100px) 50vw, 33vw" alt={`TerraNova yard transformation ${index + 1}: before and after`} />
+            <div><span>BEFORE</span><strong>AFTER</strong></div>
+          </article>)}
         </div>
       </section>
 
