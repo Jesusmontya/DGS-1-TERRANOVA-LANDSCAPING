@@ -16,6 +16,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/fall-leaf-cleanup-reno',
     '/leaf-removal-reno',
     '/yard-debris-removal-reno',
+    '/snow-removal-reno',
     '/locations/sparks',
     '/locations/verdi',
     '/locations/lake-tahoe',

@@ -39,6 +39,7 @@ export default function FallLeafCleanupRenoPage() {
     related={[
       { href: '/leaf-removal-reno', label: 'Leaf Removal Reno' },
       { href: '/yard-debris-removal-reno', label: 'Yard Debris Removal' },
+      { href: '/snow-removal-reno', label: 'Snow Removal Reno' },
       { href: '/landscaping-reno-nv', label: 'Landscaping Reno' },
       { href: '/xeriscaping-reno', label: 'Xeriscaping Reno' },
       { href: '/backyard-remodel-reno', label: 'Backyard Remodel' },

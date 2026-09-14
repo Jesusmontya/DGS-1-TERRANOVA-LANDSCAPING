@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect, useState } from 'react'
 import ScrollHero from '../components/ScrollHero'
 import ServiceAreaMap from '../components/ServiceAreaMap'
 import { getLeadAttribution, rememberQuoteOrigin, trackEvent } from '@/lib/analytics'
@@ -41,6 +42,18 @@ const services = [
 
 export default function Home() {
   const { startedAt } = useLeadFormSecurity()
+  const [showSeasonalPrompt, setShowSeasonalPrompt] = useState(false)
+
+  useEffect(() => {
+    if (window.sessionStorage.getItem('terranova-seasonal-prompt-seen')) return
+    const timer = window.setTimeout(() => {
+      setShowSeasonalPrompt(true)
+      window.sessionStorage.setItem('terranova-seasonal-prompt-seen', 'true')
+    }, 1800)
+    return () => window.clearTimeout(timer)
+  }, [])
+
+  const dismissSeasonalPrompt = () => setShowSeasonalPrompt(false)
   const handleQuoteClick = (placement: string) => {
     rememberQuoteOrigin()
     trackEvent('click_free_quote', { placement, page_path: window.location.pathname })
@@ -64,6 +77,15 @@ export default function Home() {
       </header>
 
       <ScrollHero />
+
+      {showSeasonalPrompt && <aside className={homeStyles.seasonalPrompt} role="dialog" aria-label="Seasonal property cleanup">
+        <button className={homeStyles.promptClose} type="button" onClick={dismissSeasonalPrompt} aria-label="Close seasonal cleanup message">×</button>
+        <p className="eyebrow">SEASONAL PROPERTY CLEANUP</p>
+        <h2>Yard and snow cleanup for Reno & Sparks.</h2>
+        <p>TerraNova provides seasonal leaf, yard, debris, and snow cleanup in addition to landscape construction.</p>
+        <a href="/fall-leaf-cleanup-reno" onClick={() => handleQuoteClick('seasonal_popup')}>Get a Free Estimate <span>→</span></a>
+        <button className={homeStyles.promptDismiss} type="button" onClick={dismissSeasonalPrompt}>No thanks</button>
+      </aside>}
 
       <section className={homeStyles.realWork} id="work">
         <div className="page-width">
@@ -105,6 +127,24 @@ export default function Home() {
       <section className="services section" id="services"><div className="page-width">
         <div className="section-heading"><div><p className="eyebrow">WHAT WE DO</p><h2>Backyard design and landscape construction for Reno-area homes.</h2></div><p>Start with the problem you want to solve. Explore the service, understand the options, then request a free quote when you are ready.</p></div>
         <div className="service-grid">{services.map((service, index) => <article className="service-card" key={service.title}><div className="service-image" role="img" aria-label={`${service.title} design visualization by TerraNova Landscaping`} style={{ backgroundImage: `url(${service.image})` }}><span>0{index + 1}</span><div className={homeStyles.renderLabel}>DESIGN VISUALIZATION</div></div><div className="service-body"><h3>{service.title}</h3><p>{service.text}</p><a className={homeStyles.serviceExplore} href={service.href}>Learn More <span>→</span></a></div></article>)}</div>
+      </div></section>
+
+      <section className={`${homeStyles.seasonalCleanup} section`} id="seasonal-cleanup"><div className="page-width">
+        <div className="section-heading"><div><p className="eyebrow">SEASONAL PROPERTY CLEANUP</p><h2>We build outdoor spaces—and help care for them through the seasons.</h2></div><p>Alongside landscape design and construction, TerraNova offers seasonal yard, leaf, debris, and snow cleanup for Reno-area properties.</p></div>
+        <div className={homeStyles.seasonalGrid}>
+          <article className={homeStyles.yardCleanupCard}>
+            <div className={homeStyles.yardPhotoGrid}>
+              <div role="img" aria-label="TerraNova yard cleanup project" style={{ backgroundImage: "url('/images/cleanyards/IMG_2999.JPG')" }} />
+              <div role="img" aria-label="TerraNova seasonal yard cleanup project" style={{ backgroundImage: "url('/images/cleanyards/IMG_3001.JPG')" }} />
+              <div role="img" aria-label="TerraNova leaf cleanup project" style={{ backgroundImage: "url('/images/cleanyards/IMG_3002.JPG')" }} />
+            </div>
+            <div className={homeStyles.seasonalCardCopy}><p className="eyebrow">REAL TERRANOVA WORK</p><h3>Yard Cleanup & Leaf Removal</h3><p>Clear leaves, pine needles, and seasonal yard debris so outdoor areas are ready for the next season.</p><a href="/fall-leaf-cleanup-reno">Explore Yard Cleanup <span>→</span></a></div>
+          </article>
+          <article className={homeStyles.snowCard} style={{ backgroundImage: "linear-gradient(0deg, rgba(20,34,27,.82), rgba(20,34,27,.08)), url('/images/cleansnow/IMG_3005.JPG')" }}>
+            <div><p className={homeStyles.lightEyebrow}>WINTER SERVICE</p><h3>Snow Removal</h3><p>Seasonal property cleanup for Reno, Sparks, and surrounding Northern Nevada communities.</p><a href="/snow-removal-reno">Explore Snow Removal <span>→</span></a></div>
+          </article>
+        </div>
+        <div className={homeStyles.seasonalFooter}><p>Need seasonal cleanup for your property?</p><a className="button button-dark" href="#contact" onClick={() => handleQuoteClick('home_seasonal_cleanup')}>Get a Free Estimate <span>↗</span></a></div>
       </div></section>
 
       <section className={homeStyles.designIntro + ' section page-width'}>
@@ -160,7 +200,7 @@ export default function Home() {
         <label>Name<input name="name" placeholder="Your name" required /></label>
         <label>Phone<input name="phone" type="tel" placeholder="(775) 000-0000" required /></label>
         <label>Email<input name="email" type="email" placeholder="you@example.com" /></label>
-        <label>Service<select name="service" defaultValue="" required><option value="" disabled>Select a service</option><option>Full Backyard / Landscape Design</option><option>Paver Patio</option><option>Concrete</option><option>Artificial Turf</option><option>Xeriscaping</option><option>Fall Leaf Cleanup / Yard Cleanup</option><option>Retaining Wall</option><option>Fencing</option><option>Irrigation</option><option>Masonry</option><option>Other</option></select></label>
+        <label>Service<select name="service" defaultValue="" required><option value="" disabled>Select a service</option><option>Full Backyard / Landscape Design</option><option>Paver Patio</option><option>Concrete</option><option>Artificial Turf</option><option>Xeriscaping</option><option>Fall Leaf Cleanup / Yard Cleanup</option><option>Snow Removal / Snow Cleanup</option><option>Retaining Wall</option><option>Fencing</option><option>Irrigation</option><option>Masonry</option><option>Other</option></select></label>
         <label>Project budget<select name="budget" defaultValue="" required><option value="" disabled>Select a range</option><option>Under $10,000</option><option>$10,000 – $20,000</option><option>$20,000 – $35,000</option><option>$35,000 – $50,000</option><option>$50,000+</option><option>Not sure yet</option></select></label>
         <label>When do you want to start?<select name="timeline" defaultValue="" required><option value="" disabled>Select timing</option><option>As soon as possible</option><option>Within 1 month</option><option>1–3 months</option><option>3–6 months</option><option>Just planning</option></select></label>
         <label className={homeStyles.formWide}>Project address<input name="address" placeholder="Reno, NV" /></label>
