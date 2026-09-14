@@ -29,6 +29,11 @@ export default function SnowRemovalRenoPage() {
       '/images/cleansnow/IMG_3007.JPG',
     ]}
     tags={['Snow Removal', 'Seasonal Property Cleanup', 'Reno & Sparks', 'Free Estimates']}
+    contextSection={{
+      title: 'Tell us which outdoor areas need snow removal.',
+      text: 'Share your property location and the areas that need attention. TerraNova can review the request and confirm the next step based on weather, scope, and scheduling.',
+      cta: 'Request a Snow Removal Estimate',
+    }}
     features={[
       { title: 'Seasonal snow removal', text: 'Request snow cleanup for the outdoor areas of your property that need attention during winter weather.' },
       { title: 'Property-specific planning', text: 'Share the property details and areas you want reviewed so TerraNova can confirm a practical cleanup scope.' },
