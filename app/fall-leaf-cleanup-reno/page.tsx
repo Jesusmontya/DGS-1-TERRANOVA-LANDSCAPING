@@ -23,6 +23,11 @@ export default function FallLeafCleanupRenoPage() {
     title="Clear fallen leaves and seasonal yard debris before it takes over your property."
     intro="TerraNova Landscaping provides fall leaf cleanup and seasonal yard cleanup for homes in Reno, Sparks, Verdi, and surrounding Northern Nevada communities."
     photoAlt="Completed TerraNova seasonal yard cleanup project"
+    photos={[
+      '/images/cleanyards/IMG_2999.JPG',
+      '/images/cleanyards/IMG_3001.JPG',
+      '/images/cleanyards/IMG_3002.JPG',
+    ]}
     tags={['Leaf Removal', 'Fall Yard Cleanup', 'Yard Debris', 'Seasonal Landscaping']}
     features={[
       { title: 'Leaf and pine needle cleanup', text: 'Clear accumulated leaves and seasonal debris from the areas of your yard that need attention.' },
