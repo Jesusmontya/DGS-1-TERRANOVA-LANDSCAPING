@@ -69,7 +69,7 @@ export default function BackyardRemodelRenoPage() {
         <div className={styles.mediaGrid}>
           <div className={styles.videoWrap}>
             <video autoPlay muted loop playsInline preload="metadata" aria-label="Real TerraNova landscaping project">
-              <source src="/images/imgs/videos_reales/IMG_3041.mp4" type="video/mp4" />
+              <source src="/images/imgs/videos_reales/File%203.mp4" type="video/mp4" />
             </video>
             <span>REAL PROJECT VIDEO</span>
           </div>

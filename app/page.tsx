@@ -110,7 +110,7 @@ export default function Home() {
           <div className={homeStyles.realMediaGrid}>
             <article className={homeStyles.videoCard}>
               <video autoPlay muted loop playsInline preload="metadata" aria-label="Real TerraNova landscaping project video">
-                <source src="/images/imgs/videos_reales/IMG_3041.mp4" type="video/mp4" />
+                <source src="/images/imgs/videos_reales/File%203.mp4" type="video/mp4" />
               </video>
               <div className={homeStyles.mediaBadge}>REAL PROJECT VIDEO</div>
             </article>
