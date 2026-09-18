@@ -15,6 +15,10 @@ export const metadata: Metadata = {
   description: 'Backyard design and landscape construction in Reno, Sparks, Verdi, and Northern Nevada. Plan your yard from zero with material guidance and a free project quote.',
   keywords: ['landscaping Reno NV', 'landscaper Reno', 'backyard design Reno', 'paver patio Reno', 'xeriscaping Reno', 'landscaping Sparks NV'],
   alternates: { canonical: siteUrl },
+  icons: {
+    icon: [{ url: '/logo/IMG_0105.PNG', type: 'image/png' }],
+    apple: [{ url: '/logo/IMG_0105.PNG', type: 'image/png' }],
+  },
   openGraph: {
     type: 'website',
     locale: 'en_US',
@@ -32,6 +36,7 @@ const localBusinessSchema = {
   '@id': `${siteUrl}/#business`,
   name: 'TerraNova Landscaping',
   url: siteUrl,
+  logo: `${siteUrl}/logo/IMG_0105.PNG`,
   telephone: '+1-775-870-7224',
   description: 'Backyard design and landscape construction in Reno, Sparks, Verdi, Lake Tahoe, and surrounding Northern Nevada communities.',
   areaServed: [
