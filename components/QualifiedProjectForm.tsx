@@ -98,7 +98,7 @@ export default function QualifiedProjectForm() {
             <option>3–6 months</option>
             <option>Just planning</option>
           </select></label>
-          <label className={styles.wide}>Project city or address<input name="city" placeholder="Reno, Sparks, Spanish Springs..." required /></label>
+          <label className={styles.wide}>Project address<input name="city" placeholder="Street address, Reno, NV" required /></label>
           <label className={styles.wide}>What do you want to build?<textarea name="message" rows={5} placeholder="Tell us about the space, the features you want, and what you would like to change." required /></label>
           <button type="submit">Request My Free Estimate <span>↗</span></button>
           <small>By submitting, you agree that TerraNova may contact you about your project.</small>
