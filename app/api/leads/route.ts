@@ -8,6 +8,16 @@ const RATE_LIMIT_MAX = 8
 const MIN_FORM_COMPLETION_MS = 2_500
 const DUPLICATE_WINDOW_MS = 24 * 60 * 60 * 1000
 const rateLimitStore = new Map<string, { count: number; resetAt: number }>()
+const QUALIFIED_PROJECT_SERVICES = new Set([
+  'Complete Backyard / New Home Yard',
+  'Backyard Remodel',
+  'Paver Patio / Outdoor Living Area',
+  'Retaining Wall / Grade Change',
+  'Turf + Xeriscape Project',
+  'Commercial Landscape Construction',
+])
+const QUALIFIED_PROJECT_BUDGETS = new Set(['$20,000 – $35,000', '$35,000 – $50,000', '$50,000+'])
+const SERVICE_AREA = /reno|sparks|spanish springs|sun valley|verdi|washoe/i
 
 function getClientIp(req: NextRequest) {
   const forwarded = req.headers.get('x-forwarded-for')
@@ -77,6 +87,31 @@ function isValidPhone(value: string) {
 
 function isValidEmail(value: string) {
   return !value || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
+}
+
+function isQualifiedProjectLead({
+  email,
+  city,
+  service,
+  budget,
+  timeline,
+  message,
+}: {
+  email: string
+  city: string
+  service: string
+  budget: string
+  timeline: string
+  message: string
+}) {
+  return Boolean(
+    email &&
+    message.length >= 24 &&
+    SERVICE_AREA.test(city) &&
+    QUALIFIED_PROJECT_SERVICES.has(service) &&
+    QUALIFIED_PROJECT_BUDGETS.has(budget) &&
+    timeline !== 'Just planning'
+  )
 }
 
 async function isRecentDuplicate(phone: string) {
@@ -189,7 +224,7 @@ export async function POST(req: NextRequest) {
       {
         success: true,
         accepted: true,
-        conversionEligible: Boolean(email && message.length >= 12 && budget && timeline),
+        conversionEligible: isQualifiedProjectLead({ email, city, service, budget, timeline, message }),
         id: data.id,
         emailSent,
         message: emailSent

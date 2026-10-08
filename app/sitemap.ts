@@ -7,6 +7,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/landscaping-reno-nv',
     '/backyard-remodel-reno',
     '/backyard-design',
+    '/reno-backyard-design-build',
     '/pavers-reno-nv',
     '/hardscape-reno',
     '/xeriscaping-reno',

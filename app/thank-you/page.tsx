@@ -12,12 +12,6 @@ export const metadata: Metadata = {
 export default function ThankYouPage() {
   return (
     <main className={styles.page}>
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `gtag('event', 'conversion', {'send_to': 'AW-18409055812/vp6NCNOi3-kcEMTMj8pE'});`,
-        }}
-      />
-
       <section className={styles.shell}>
         <div className={styles.copyPanel}>
           <div className={styles.topbar}>
